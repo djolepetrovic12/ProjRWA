@@ -1,0 +1,46 @@
+<mat-toolbar class="mat-elevation-z3">
+  <span><a routerLink="/login">NazivAplikacije</a></span>
+
+ 
+
+  <div class="spacerr"></div>
+
+  <span *ngIf="!authenticated">
+    <a mat-button routerLink="/login">Log in</a>
+    <a mat-flat-button routerLink="/register" color="accent">Sign up</a>
+  </span>
+  <span *ngIf="authenticated" >
+    <a mat-icon-button [routerLink]="['/login']" (click)="logout()"> <mat-icon>logout</mat-icon> </a>
+  </span>
+
+</mat-toolbar>
+
+
+
+
+
+
+
+<!--<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" routerLink="/">Home</a>
+
+      <div>
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="!authenticated">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/login">login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/register">Register</a>
+          </li>
+        </ul>
+
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="authenticated">
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" routerLink="/login" (click)="logout()">logout</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+-->

@@ -1,0 +1,92 @@
+
+<div class="login-container" >
+
+    <h2>Register</h2>
+    <form [formGroup]="form" (submit)="submit()">
+
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>name</mat-label>
+        <input matInput formControlName="name" type="text" required placeholder="name" class="form-control">
+        @if (form.controls['name'].invalid && (form.controls['name'].touched || form.controls['name'].dirty))
+         {
+            @if(form.controls['name'].errors?.['required']){
+                <mat-error>*note: this field is required</mat-error>
+            }
+            @if(form.controls['name'].errors?.['minlength']){
+                <mat-error>*note: minimum name length is 2</mat-error>
+            }
+            @if(form.controls['name'].errors?.['maxlength']){
+                <mat-error>*note: maximum name length is 50</mat-error>
+            }
+            
+         }
+         </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+        <mat-label>surname</mat-label>
+        <input matInput formControlName="surname" type="text" required placeholder="surname" class="form-control">
+        @if (form.controls['surname'].invalid && (form.controls['surname'].touched || form.controls['surname'].dirty))
+        {
+            @if(form.controls['surname'].errors?.['required']){
+                <mat-error>*note: this field is required</mat-error>
+            }
+            @if(form.controls['surname'].errors?.['minlength']){
+                <mat-error>*note: minimum surname length is 2</mat-error>
+            }
+            @if(form.controls['surname'].errors?.['maxlength']){
+                <mat-error>*note: maximum surname length is 50</mat-error>
+            }
+        }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+        <mat-label>username</mat-label>
+        <input matInput formControlName="username" type="text" required placeholder="username" class="form-control">
+        @if (form.controls['username'].invalid && (form.controls['username'].touched || form.controls['username'].dirty))
+        {
+            @if(form.controls['username'].errors?.['required']){
+                <mat-error>*note: this field is required</mat-error>
+            }
+            @if(form.controls['username'].errors?.['minlength']){
+                <mat-error>*note: minimum username length is 3</mat-error>
+            }
+            @if(form.controls['username'].errors?.['pattern']){
+                <mat-error>*note: it is not a valid username</mat-error>
+            }
+        }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+        <mat-label>e-mail</mat-label>
+        <input matInput formControlName="email" type="email" required placeholder="email" class="form-control">
+        @if (form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty))
+        {
+            @if(form.controls['email'].errors?.['required']){
+                <mat-error>*note: this field is required</mat-error>
+            }
+            @if(form.controls['email'].errors?.['email']){
+                <mat-error>*note: it is not a valid email address</mat-error>
+            }
+        }
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="full-width">
+        <mat-label>password</mat-label>
+        <input matInput formControlName="password" type="password" required placeholder="password" class="form-control">
+        @if (form.controls['password'].invalid && (form.controls['password'].touched || form.controls['password'].dirty))
+        {
+            @if(form.controls['password'].errors?.['required']){
+                <mat-error>*note: this field is required</mat-error>
+            }
+            @if(form.controls['password'].errors?.['minlength']){
+                <mat-error>*note: minimum password length is 8</mat-error>
+            }
+        }
+        </mat-form-field> 
+        <div class="formButtonDiv">
+            <div class="formButton">
+                <button mat-flat-button type="submit" [disabled]="form.invalid">register</button>
+            </div>
+        </div>
+
+    </form>
+</div>

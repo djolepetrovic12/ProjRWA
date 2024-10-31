@@ -1,0 +1,45 @@
+
+<div class="login-container">
+    <h2>Log in</h2>
+    <form [formGroup]="form" (submit)="submit()">
+        <div>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>e-mail</mat-label>
+                <input matInput formControlName="email" type="email" type="email" required class="form-control">
+                @if (form.controls['email'].invalid && (form.controls['email'].touched || form.controls['email'].dirty))
+                {
+                    @if(form.controls['email'].errors?.['required']){
+                        <mat-error>*note: this field is required</mat-error>
+                        
+                    }
+                    @if(form.controls['email'].errors?.['email']){
+                        <mat-error>*note: it is not a valid email address</mat-error>
+                        
+                    }
+                }
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width">
+                <mat-label>password</mat-label>
+                <input matInput formControlName="password" type="password" required class="form-control">
+                @if (form.controls['password'].invalid && (form.controls['password'].touched || form.controls['password'].dirty))
+                {
+                    @if(form.controls['password'].errors?.['required']){
+                        <mat-error>*note: this field is required</mat-error>
+                    }
+                    @if(form.controls['password'].errors?.['minlength']){
+                        <mat-error>*note: minimum password length is 8</mat-error>
+                    }
+                }
+            </mat-form-field>
+        </div>
+        <div class="formButtonDiv">
+            <div class="formButton">
+            <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">log in</button>
+            </div>
+        </div>
+
+
+    </form>
+</div>
+
+<h1>sredi onaj problem da moras dvaput da kliknes da ti se pojave prava dugmad nakon logout-a</h1>
