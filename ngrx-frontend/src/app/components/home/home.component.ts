@@ -1,6 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Emitters } from '../../emmiters/emmiters';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../app.state';
+import { SelectUserFeature } from '../../store/selectors/user.selector';
+import { User } from '../../models/user';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -10,10 +15,13 @@ import { Emitters } from '../../emmiters/emmiters';
 export class HomeComponent implements OnInit{
 
   message: string = "you are not logged in";
+  userInfo$: Observable<User | null>;
 
-  constructor(private httpClient:HttpClient){}
+  constructor(private httpClient:HttpClient, private store:Store<AppState>){}
 
   ngOnInit(): void {
+    
+
     this.httpClient.get("http://localhost:3000/user/user1",{withCredentials:true})
     .subscribe(
       res=>{

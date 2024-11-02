@@ -2,7 +2,13 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { error } from 'console';
+import { AppState } from '../../app.state';
+import { Login } from '../../store/actions/user.action';
+import { Observable } from 'rxjs';
+import { User } from '../../models/user';
+import { SelectUserFeature } from '../../store/selectors/user.selector';
 
 @Component({
   selector: 'app-login',
@@ -11,8 +17,15 @@ import { error } from 'console';
 })
 export class LoginComponent implements OnInit {
 
+  userInfo$ : Observable<User | null>
+
   form:FormGroup
-  constructor(private formBuilder:FormBuilder,private httpClient:HttpClient,private router:Router){}
+  constructor(
+    private formBuilder:FormBuilder,
+    private httpClient:HttpClient,
+    private router:Router,
+    private store:Store<AppState>
+  ){}
 
 
   ngOnInit(): void {
@@ -20,34 +33,26 @@ export class LoginComponent implements OnInit {
       email:['',[Validators.email]],
       password:['',[Validators.required,Validators.minLength(8),]]
     })
+
+    this.userInfo$ = this.store.select(SelectUserFeature);
+    console.log(this.userInfo$);
   }
 
   submit():void {
-    this.httpClient.post("http://localhost:3000/user/login", this.form.getRawValue(),{withCredentials:true})
-    .subscribe(
-      (response) => {this.router.navigate(['/']);},
-      (error) => {
-        const errorMessage = error.error?.message || 'An unknown error occurred';
-        console.log(errorMessage);
-      }
-    );
+    if (this.form.valid) {
+      console.log("dispecujem akciju");
+      this.store.dispatch(Login({ formData: this.form.getRawValue() }));
+    }
   }
-
-
-
-  //.subscribe(() => this.router.navigate(['/']));
-
-  /*
-          next: (response) => {
-          // Handle successful login (e.g., navigate to dashboard)
-          console.log('Login successful', response);
-        },
-        error: (error) => {
-          // Set the error message to be displayed
-          this.errorMessage = error;
-
-
+  
+  /*this.httpClient.post("http://localhost:3000/user/login", this.form.getRawValue(),{withCredentials:true})
+  .subscribe(
+    (response) => {this.router.navigate(['/']);},
+    (error) => {
+      const errorMessage = error.error?.message || 'An unknown error occurred';
+      console.log(errorMessage);
+    }
+  );
   */
-
 
 }

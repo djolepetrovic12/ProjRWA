@@ -31,7 +31,7 @@ export class UserController {
   @Post('login')
   async login(
     @Body('email') email : string,
-    @Body('password') password: string,
+    @Body('password') sifra: string,
     //ovo passthrough je da omoguci da se cookie posalje na frontend
     @Res({passthrough: true}) response: Response
     ) {
@@ -42,7 +42,7 @@ export class UserController {
       throw new NotFoundException('dati korisnik ne postoji');
     }
 
-    if(!await bcrypt.compare(password,user.password))
+    if(!await bcrypt.compare(sifra,user.password))
     {
       throw new BadRequestException('neispravni kredencijali');
     }
@@ -51,9 +51,9 @@ export class UserController {
 
     response.cookie('jwt',jwt,{httpOnly:true});
 
-    return {
-      message:'success'
-    };
+    const {password, ...korisnik} = user
+
+    return korisnik;
   }
 
   @Get('user1')

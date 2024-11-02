@@ -1,3 +1,7 @@
+<div *ngIf="userInfo$ | async as korisnik">
+    <p> welcome, {{korisnik.name}}</p>
+</div>
+
 
 <div class="login-container">
     <h2>Log in</h2>
@@ -41,5 +45,3 @@
 
     </form>
 </div>
-
-<h1>sredi onaj problem da moras dvaput da kliknes da ti se pojave prava dugmad nakon logout-a</h1>
