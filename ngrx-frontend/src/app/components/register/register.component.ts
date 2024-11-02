@@ -2,6 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {Router} from '@angular/router'
+import { AppState } from '../../app.state';
+import { Store } from '@ngrx/store';
+import { Register } from '../../store/actions/user.action';
 
 
 @Component({
@@ -14,7 +17,12 @@ export class RegisterComponent implements OnInit{
 
   form: FormGroup;
 
-  constructor(private formBuilder:FormBuilder, private httpClient: HttpClient,private router: Router){}
+  constructor(
+    private formBuilder:FormBuilder, 
+    private httpClient: HttpClient,
+    private router: Router,
+    private store:Store<AppState>
+  ){}
 
   ngOnInit(): void{
     this.form = this.formBuilder.group({
@@ -32,8 +40,13 @@ export class RegisterComponent implements OnInit{
   }
 
   submit() :void {
+
+    this.store.dispatch(Register({ formData: this.form.getRawValue()}))
+
     //console.log(this.form.getRawValue());
+
+    /*
     this.httpClient.post("http://localhost:3000/user/register", this.form.getRawValue())
-    .subscribe(() => this.router.navigate(['/login']));
+    .subscribe(() => this.router.navigate(['/login']));*/
     }
 }

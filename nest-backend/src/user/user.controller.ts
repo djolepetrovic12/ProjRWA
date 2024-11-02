@@ -25,7 +25,9 @@ export class UserController {
 
     delete user.password;
 
-    return user;
+    return {
+      message: "success"
+    };
   }
 
   @Post('login')

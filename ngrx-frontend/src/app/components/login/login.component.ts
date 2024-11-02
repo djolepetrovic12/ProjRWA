@@ -35,12 +35,10 @@ export class LoginComponent implements OnInit {
     })
 
     this.userInfo$ = this.store.select(SelectUserFeature);
-    console.log(this.userInfo$);
   }
 
   submit():void {
     if (this.form.valid) {
-      console.log("dispecujem akciju");
       this.store.dispatch(Login({ formData: this.form.getRawValue() }));
     }
   }

@@ -20,6 +20,12 @@ export class UserService {
   {
     return this.httpClient.post("http://localhost:3000/user/logout",{},{withCredentials:true})
   }
+
+  register(formData:any)
+  {
+    return this.httpClient.post("http://localhost:3000/user/register", formData);
+    //.subscribe(() => this.router.navigate(['/login']));
+  }
 }
 
 
