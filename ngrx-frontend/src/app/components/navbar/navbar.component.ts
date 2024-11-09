@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { SelectAuthFeature } from '../../store/selectors/user.selector';
 import { Logout } from '../../store/actions/user.action';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -13,14 +14,30 @@ import { Logout } from '../../store/actions/user.action';
   styleUrl: './navbar.component.scss'
 })
 export class NavbarComponent implements OnInit{
+
   
   authenticated$ : Observable<boolean> = of(false);
 
-  constructor(private httpClient:HttpClient, private store: Store<AppState>){}
+  constructor(
+    private httpClient:HttpClient,
+    private store: Store<AppState>,
+    private router: Router
+  ){}
   
   ngOnInit(): void {
     
     this.authenticated$ = this.store.select(SelectAuthFeature);
+    
+
+    this.authenticated$.subscribe(auth => {
+      if(!auth)
+      {
+        console.log(auth + 'u funkciji');
+        this.router.navigate(['/login'])
+      }
+      if(auth)
+        console.log('autentifikovan sam');
+    })
     /*Emitters.authEmmiter.subscribe(
       (auth:boolean) => { this.authenticated = auth;}
     )*/

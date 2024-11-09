@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, Res, Req, UnauthorizedException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, Res, Req, UnauthorizedException, UseGuards, SetMetadata } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -8,6 +8,9 @@ import {JwtService} from '@nestjs/jwt';
 import { Response,Request, response } from 'express';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe, NotFoundException } from '@nestjs/common';
+import { JwtAuthGuard } from 'src/auth-guard/jwt-auth-guard.guard';
+import { RolesGuard } from 'src/roles-guard/roles-guard.guard';
+import { Roles } from 'enums';
 
 @Controller('user')
 export class UserController {
@@ -49,7 +52,8 @@ export class UserController {
       throw new BadRequestException('neispravni kredencijali');
     }
 
-    const jwt = await this.jwtService.signAsync({id:user.id});
+    //sa signAsync definisemo payload koji ce se nalaziti u tokenu
+    const jwt = await this.jwtService.signAsync({id:user.id,role: user.role,name: user.name,surname: user.surname,email: user.email, username: user.username});
 
     response.cookie('jwt',jwt,{httpOnly:true});
 
@@ -82,24 +86,42 @@ export class UserController {
 
   }
 
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Admin,Roles.Student])
   @Post('logout')
   async logout(@Res({passthrough:true}) response : Response)
   {
-    response.clearCookie('jwt');
+    try{
 
-    return {
-      message: 'success'
+      response.clearCookie('jwt');
+  
+      if(!response.req.cookies['jwt'])
+      {
+        return {message: 'logout successful'}
+      }
+      else {
+        throw new Error('Failed to clear cookie');  // Throw error if cookie wasn't cleared
+      }
+
     }
+    catch(e)
+    {
+      throw new UnauthorizedException('Logout failed' + e.message)
+    }
+
   }
 
 
 
 
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Admin])
   @Get()
   findAll() {
     return this.userService.findAll();
   }
+
 
   @Get(':id')
   findOne(@Param('id') id: string) {

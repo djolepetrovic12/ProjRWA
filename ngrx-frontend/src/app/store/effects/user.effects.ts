@@ -35,7 +35,17 @@ export class UserEffects {
       ofType(Logout),
       switchMap(() =>
         this.userService.logout().pipe(
-          map((response) => { this.router.navigate(['/login']);return LogoutSuccess({message:response})} ),
+          map((response:any) => { 
+            if (response && response.message === 'logout successful') {
+              console.log("usao sam success");
+              return LogoutSuccess({ message: response.message });
+            } else {
+              console.log("usao sam fail");
+              throw new Error('Logout failed');
+              
+            }
+          
+          } ),
           catchError((error) => of(LoginFailure({ error:error })))
         )
       )

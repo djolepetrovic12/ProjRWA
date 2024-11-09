@@ -1,9 +1,16 @@
-import { Column, Entity, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Flashcard } from "src/flashcard/entities/flashcard.entity";
+import { StudyResource } from "src/study-resource/entities/study-resource.entity";
+import { Column, Entity, JoinColumn, OneToMany, PrimaryGeneratedColumn, Unique } from "typeorm";
+import { Comment } from "src/comment/entities/comment.entity";
+
 
 @Entity({name:'users'})
 export class User {
     @PrimaryGeneratedColumn()
     id:number;
+
+    @Column()
+    role: 'ADMIN' | 'STUDENT' | 'PROFESSOR';
 
     @Column()
     name:string;
@@ -20,6 +27,14 @@ export class User {
     @Column()
     password:string;
     
+    @OneToMany(() => Flashcard, (flashcards)=>flashcards.user)
+    flashcards:Flashcard[];
+
+    @OneToMany(() => StudyResource, (studyResource)=>studyResource.user)
+    studyResources:StudyResource[];
+
+    @OneToMany(() => Comment, (comment)=>comment.user)
+    comments:Comment[];
     
 
 }

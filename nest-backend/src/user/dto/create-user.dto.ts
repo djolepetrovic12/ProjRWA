@@ -1,7 +1,11 @@
 import { PartialType } from '@nestjs/mapped-types';
-import { IsEmail, IsString, Matches, MaxLength, MinLength } from 'class-validator';
+import { IsEmail, IsIn, IsString, Matches, MaxLength, MinLength } from 'class-validator';
 
 export class CreateUserDto {
+
+    @IsString()
+    @IsIn(['ADMIN', 'PROFESSOR', 'STUDENT'])
+    role: 'ADMIN' | 'PROFESSOR' | 'STUDENT';
 
     @IsString()
     @MaxLength(50)
