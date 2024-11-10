@@ -88,27 +88,13 @@ export class UserController {
 
 
   @UseGuards(JwtAuthGuard, RolesGuard)
-  @SetMetadata('roles',[Roles.Admin,Roles.Student])
+  @SetMetadata('roles',[Roles.Admin,Roles.Student,Roles.Professor])
   @Post('logout')
   async logout(@Res({passthrough:true}) response : Response)
   {
-    try{
-
       response.clearCookie('jwt');
   
-      if(!response.req.cookies['jwt'])
-      {
-        return {message: 'logout successful'}
-      }
-      else {
-        throw new Error('Failed to clear cookie');  // Throw error if cookie wasn't cleared
-      }
-
-    }
-    catch(e)
-    {
-      throw new UnauthorizedException('Logout failed' + e.message)
-    }
+      return {message: 'logout successful'}
 
   }
 

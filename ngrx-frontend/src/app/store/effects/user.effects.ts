@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from "@ngrx/store";
 import { AppState } from "../../app.state";
-import { Login, LoginFailure, LoginSuccess, Logout, LogoutSuccess, Register, RegisterFailure, RegisterSuccess } from "../actions/user.action";
+import { Login, LoginFailure, LoginSuccess, Logout, LogoutFailed, LogoutSuccess, Register, RegisterFailure, RegisterSuccess } from "../actions/user.action";
 import { UserService } from "../../services/User/user-service.service";
 import { catchError, map, of, switchMap } from "rxjs";
 import { User } from "../../models/user";
@@ -15,7 +15,8 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private userService: UserService,
-    private router:Router
+    private router:Router,
+    private readonly store:Store<AppState>
   ) {}
 
   user$ = createEffect(() =>
@@ -37,7 +38,7 @@ export class UserEffects {
         this.userService.logout().pipe(
           map((response:any) => { 
             if (response && response.message === 'logout successful') {
-              console.log("usao sam success");
+              this.router.navigate(['/login']);
               return LogoutSuccess({ message: response.message });
             } else {
               console.log("usao sam fail");
@@ -46,7 +47,7 @@ export class UserEffects {
             }
           
           } ),
-          catchError((error) => of(LoginFailure({ error:error })))
+          catchError((error) => of(LogoutFailed({ error:error })))
         )
       )
     )

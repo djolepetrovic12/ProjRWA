@@ -22,6 +22,10 @@ import { AppState } from './app.state';
 import { EffectsModule } from '@ngrx/effects';
 import { UserEffects } from './store/effects/user.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { MainpageComponent } from './components/mainpage/mainpage.component';
+import { FlashcardsPageComponent } from './components/flashcards-page/flashcards-page.component';
+import { FlashcardComponent } from './components/flashcard/flashcard.component';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -29,20 +33,24 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     NavbarComponent,
     LoginComponent,
     RegisterComponent,
-    HomeComponent
+    HomeComponent,
+    MainpageComponent,
+    FlashcardsPageComponent,
+    FlashcardComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule,
-    ReactiveFormsModule,
     HttpClientModule,
     MatToolbarModule,
     MatIconModule,
+    FormsModule,
+    ReactiveFormsModule,
     MatButtonModule,
     MatCardModule,
     MatInputModule,
     MatFormFieldModule,
+    MatDialogModule,
     BrowserAnimationsModule,
     StoreModule.forRoot<AppState>({ user: UserReducer }),
     EffectsModule.forRoot([UserEffects]),

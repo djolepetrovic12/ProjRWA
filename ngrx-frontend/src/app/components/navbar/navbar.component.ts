@@ -29,11 +29,11 @@ export class NavbarComponent implements OnInit{
     this.authenticated$ = this.store.select(SelectAuthFeature);
     
 
-    this.authenticated$.subscribe(auth => {
+    /*this.authenticated$.subscribe(auth => {
       if(!auth)
       {
         console.log(auth + 'u funkciji');
-        this.router.navigate(['/login'])
+        this.router.navigate(['/login']);
       }
       if(auth)
         console.log('autentifikovan sam');
