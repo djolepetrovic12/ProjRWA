@@ -10,6 +10,12 @@ export const SelectUserFeature = createSelector
     (state) => state.Iam
 );
 
+
+export const SelectUserIDFeature = createSelector
+(
+    selectUserState,
+    (state) => state.Iam?.id
+);
 export const SelectAuthFeature = createSelector
 (
     selectUserState,

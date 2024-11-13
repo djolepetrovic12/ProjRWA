@@ -1,0 +1,70 @@
+.example-card {
+    max-width: 400px;
+    margin: 20px auto;
+    padding: 16px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+  }
+  
+  /* Hover effect to make the card pop a bit */
+  .example-card:hover {
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Text styling */
+  mat-card-content p {
+    font-size: 16px;
+    color: #333;
+    margin: 8px 0;
+  }
+  
+  /* Button container styling */
+  mat-card-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+  }
+  
+  /* Button styling */
+  button {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 4px;
+  }
+  
+  /* Primary button (Edit) */
+  button[color="primary"] {
+    background-color: #19d25a;
+    color: white;
+  }
+  
+  button[color="primary"]:hover {
+    background-color: #1565c0;
+  }
+  
+  /* Warn button (Delete) */
+  button[color="warn"] {
+    background-color: #d32f2f;
+    color: white;
+  }
+  
+  button[color="warn"]:hover {
+    background-color: #000000;
+  }
+
+  mat-card-content p:first-of-type {
+    font-style: italic;
+    font-size: 18px;
+    color: #4a4a4a;
+    margin-bottom: 4px;
+  }
+  
+  /* Style for the second paragraph: Times New Roman, slightly larger size */
+  mat-card-content p:nth-of-type(2) {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 16px;
+    color: #333;
+  }

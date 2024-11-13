@@ -26,6 +26,9 @@ import { MainpageComponent } from './components/mainpage/mainpage.component';
 import { FlashcardsPageComponent } from './components/flashcards-page/flashcards-page.component';
 import { FlashcardComponent } from './components/flashcard/flashcard.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { AddFlashcardDialogComponent } from './components/add-flashcard-dialog/add-flashcard-dialog.component';
+import { MatSelectModule } from '@angular/material/select'; 
+import { FlashcardReducer } from './store/reducers/flashcard.reducer';
 
 @NgModule({
   declarations: [
@@ -36,7 +39,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     HomeComponent,
     MainpageComponent,
     FlashcardsPageComponent,
-    FlashcardComponent
+    FlashcardComponent,
+    AddFlashcardDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -51,8 +55,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatInputModule,
     MatFormFieldModule,
     MatDialogModule,
+    MatSelectModule,
     BrowserAnimationsModule,
-    StoreModule.forRoot<AppState>({ user: UserReducer }),
+    StoreModule.forRoot<AppState>({ user: UserReducer, flashcards:FlashcardReducer }),
     EffectsModule.forRoot([UserEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states in DevTools

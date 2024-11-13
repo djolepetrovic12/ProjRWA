@@ -38,6 +38,10 @@ export class FlashcardService {
     return `This action returns all flashcard`;
   }
 
+  findAllForUser(id:number) {
+    return this.flashcardRepository.findBy({userID:id});
+  }
+
   findOne(id: number) {
     return `This action returns a #${id} flashcard`;
   }
@@ -47,6 +51,7 @@ export class FlashcardService {
   }
 
   remove(id: number) {
-    return `This action removes a #${id} flashcard`;
+    this.flashcardRepository.delete(id);
+    return id;
   }
 }

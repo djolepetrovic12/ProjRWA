@@ -1,1 +1,5 @@
-<p>flashcards-page works!</p>
+<div *ngIf="flashcardsList$ | async as flashcards">
+    <div *ngFor="let flashcard of flashcards">
+      <app-flashcard [flashcardInfo]="flashcard"></app-flashcard>
+    </div>
+  </div>

@@ -18,6 +18,11 @@ export class FlashcardController {
     return this.flashcardService.findAll();
   }
 
+  @Get('findAllForUser/:id')
+  findAllForUser(@Param('id') id:number) {
+    return this.flashcardService.findAllForUser(id);
+  }
+
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.flashcardService.findOne(+id);
@@ -28,7 +33,7 @@ export class FlashcardController {
     return this.flashcardService.update(+id, updateFlashcardDto);
   }
 
-  @Delete(':id')
+  @Delete('deleteAFlashcard/:id')
   remove(@Param('id') id: string) {
     return this.flashcardService.remove(+id);
   }

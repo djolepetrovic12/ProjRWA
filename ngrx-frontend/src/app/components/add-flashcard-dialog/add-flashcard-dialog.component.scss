@@ -1,0 +1,68 @@
+
+/*
+mat-dialog-content {
+  position: absolute; /* Position it above other elements
+  top: 20%; // Adjust to your liking 
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 8999;  //High z-index to make sure it stays above other elements
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .mat-select-panel {
+  position: absolute;
+  z-index: 11000 !important;
+}
+*/
+small 
+{
+    color:red;
+}
+
+.login-container {
+    max-width: 350px;
+    margin: 100px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .error-message {
+    color: red;
+    margin-top: 10px;
+  }
+  
+  .formButtonDiv
+  {
+    display:flex;
+    justify-content: flex-end;      
+    align-items: center;  
+    flex:1;
+  }
+
+  .formButton{
+    flex:1;
+  }
+
+  .formButton > button{
+    width: 100%;
+  }
+
+  .full-width {
+    width: 100%; /* Make the form field 100% of its parent */
+  }
+
+  .mat-form-field {
+    width: 100%;
+  }
+
+  

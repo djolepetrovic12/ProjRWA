@@ -7,6 +7,8 @@ import { UserService } from "../../services/User/user-service.service";
 import { catchError, map, of, switchMap } from "rxjs";
 import { User } from "../../models/user";
 import { Router } from "@angular/router";
+import { CreateAFlashcard, CreateAFlashcardFailure, CreateAFlashcardSuccess, DeleteAFlashcard, DeleteAFlashcardFailure, DeleteAFlashcardSuccess, LoadFlashcards, LoadFlashcardsFailure, LoadFlashcardsSuccess } from "../actions/flashcard.actions";
+import { FlashcardService } from "../../services/Flashcard/flashcard.service";
 
 
 
@@ -15,6 +17,7 @@ export class UserEffects {
   constructor(
     private actions$: Actions,
     private userService: UserService,
+    private flashcardService : FlashcardService,
     private router:Router,
     private readonly store:Store<AppState>
   ) {}
@@ -64,5 +67,54 @@ export class UserEffects {
       )
     )
   );
+
+  createAFlashcard$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(CreateAFlashcard),
+      switchMap(({id,formData}) => 
+        this.flashcardService.createAFlashcard(id,formData).pipe(
+          map((response) =>  CreateAFlashcardSuccess({message:response}) ),
+          catchError((error) => of(CreateAFlashcardFailure({ error:error })))
+        )
+      )
+      )
+    )
+
+    loadFlashcard$ = createEffect(() => 
+      this.actions$.pipe(
+        ofType(LoadFlashcards),
+        switchMap(({id:id}) => 
+          this.flashcardService.loadFlashcards(id).pipe(
+            map((response) =>  LoadFlashcardsSuccess({flashcards:response}) ),
+            catchError((error) => of(LoadFlashcardsFailure({ error:error })))
+          )
+        )
+        )
+      )
+
+      deleteAFlashcard$ = createEffect(() => 
+        this.actions$.pipe(
+          ofType(DeleteAFlashcard),
+          switchMap(({id}) => 
+            this.flashcardService.deleteAFlashcard(id).pipe(
+              map((response) =>  DeleteAFlashcardSuccess({id:<number>response}) ),
+              catchError((error) => of(DeleteAFlashcardFailure({ error:error })))
+            )
+          )
+          )
+        )
+
+      /*user$ = createEffect(() =>
+        this.actions$.pipe(
+          ofType(Login),
+          switchMap(({ formData: formData }) =>
+            this.userService.login(formData).pipe(
+              map((response) => { this.router.navigate(['/']);return LoginSuccess({user:response})} ),
+              catchError((error) => of(LoginFailure({ error:error })))
+            )
+          )
+        )
+      );*/
+
 
 }
