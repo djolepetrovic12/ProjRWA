@@ -28,7 +28,7 @@ export class FlashcardController {
     return this.flashcardService.findOne(+id);
   }
 
-  @Patch(':id')
+  @Patch('updateAFlashcard/:id')
   update(@Param('id') id: string, @Body() updateFlashcardDto: UpdateFlashcardDto) {
     return this.flashcardService.update(+id, updateFlashcardDto);
   }

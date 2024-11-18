@@ -26,4 +26,9 @@ export class FlashcardService {
     return this.httpClient.delete(this.flashcardURL + 'deleteAFlashcard/' + id,{withCredentials:true})
   }
 
+  updateAFlashcard(id:number,formData:any)
+  {
+    return this.httpClient.patch(this.flashcardURL + 'updateAFlashcard/' + id,formData,{withCredentials:true})
+  }
+
 }

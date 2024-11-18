@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { AppState } from '../../app.state';
+import { AppState } from '../../../app.state';
 import { Observable, take } from 'rxjs';
-import { Flashcard } from '../../models/flashcard';
-import { SelectFlashcardsFeature } from '../../store/selectors/flashcard.selector';
-import { LoadFlashcards } from '../../store/actions/flashcard.actions';
-import { SelectUserIDFeature } from '../../store/selectors/user.selector';
+import { Flashcard } from '../../../models/flashcard';
+import { SelectFlashcardsFeature } from '../../../store/selectors/flashcard.selector';
+import { LoadFlashcards } from '../../../store/actions/flashcard.actions';
+import { SelectUserIDFeature } from '../../../store/selectors/user.selector';
+import { MatDialog } from '@angular/material/dialog';
+import { AddFlashcardDialogComponent } from '../add-flashcard-dialog/add-flashcard-dialog.component';
 
 @Component({
   selector: 'app-flashcards-page',
@@ -17,7 +19,10 @@ export class FlashcardsPageComponent implements OnInit {
   flashcardsList$ : Observable<Flashcard[] | null>;
   UserID$ : Observable<number | undefined>;
   
-  constructor(private store:Store<AppState>){
+  constructor(
+    private store:Store<AppState>,
+    private matDialogRef: MatDialog
+  ){
     this.flashcardsList$ = this.store.select(SelectFlashcardsFeature);
   }
   
@@ -30,8 +35,11 @@ export class FlashcardsPageComponent implements OnInit {
       }
   })
 
+  }
 
-    
+  openDialog()
+  {
+    this.matDialogRef.open(AddFlashcardDialogComponent);
   }
 
 }

@@ -2,13 +2,17 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from "@ngrx/store";
 import { AppState } from "../../app.state";
-import { Login, LoginFailure, LoginSuccess, Logout, LogoutFailed, LogoutSuccess, Register, RegisterFailure, RegisterSuccess } from "../actions/user.action";
+import { Login, LoginFailure, LoginSuccess, Logout, LogoutFailed, LogoutSuccess, Register, RegisterFailure, RegisterSuccess, RehydrateAuth } from "../actions/user.action";
 import { UserService } from "../../services/User/user-service.service";
 import { catchError, map, of, switchMap } from "rxjs";
 import { User } from "../../models/user";
 import { Router } from "@angular/router";
-import { CreateAFlashcard, CreateAFlashcardFailure, CreateAFlashcardSuccess, DeleteAFlashcard, DeleteAFlashcardFailure, DeleteAFlashcardSuccess, LoadFlashcards, LoadFlashcardsFailure, LoadFlashcardsSuccess } from "../actions/flashcard.actions";
+import { CreateAFlashcard, CreateAFlashcardFailure, CreateAFlashcardSuccess, DeleteAFlashcard, DeleteAFlashcardFailure, DeleteAFlashcardSuccess, LoadFlashcards, LoadFlashcardsFailure, LoadFlashcardsSuccess, UpdateAFlashcard, UpdateAFlashcardFailure, UpdateAFlashcardSuccess } from "../actions/flashcard.actions";
 import { FlashcardService } from "../../services/Flashcard/flashcard.service";
+import { Flashcard } from "../../models/flashcard";
+import { CreateAStudyResource, CreateAStudyResourceFailure, CreateAStudyResourceSuccess, LoadMyStudyResources, LoadMyStudyResourcesFailure, LoadMyStudyResourcesSuccess, LoadStudyResources, LoadStudyResourcesFailure, LoadStudyResourcesSuccess } from "../actions/studyResource.actions";
+import { StudyResourceService } from "../../services/StudyResource/study-resource.service";
+import { StudyResource } from "../../models/studyResource";
 
 
 
@@ -18,9 +22,22 @@ export class UserEffects {
     private actions$: Actions,
     private userService: UserService,
     private flashcardService : FlashcardService,
+    private studyResourceService : StudyResourceService,
     private router:Router,
     private readonly store:Store<AppState>
   ) {}
+
+  rehydrate$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(RehydrateAuth),
+      switchMap(() =>
+        this.userService.getUserFromCookie().pipe(
+          map(response => {this.router.navigate(['/']);return LoginSuccess({user:response})}),
+          catchError((error) => of(LoginFailure({ error })))
+        )
+      )
+    )
+  );
 
   user$ = createEffect(() =>
     this.actions$.pipe(
@@ -73,7 +90,7 @@ export class UserEffects {
       ofType(CreateAFlashcard),
       switchMap(({id,formData}) => 
         this.flashcardService.createAFlashcard(id,formData).pipe(
-          map((response) =>  CreateAFlashcardSuccess({message:response}) ),
+          map((response) =>  CreateAFlashcardSuccess({flashcard:<Flashcard>response}) ),
           catchError((error) => of(CreateAFlashcardFailure({ error:error })))
         )
       )
@@ -104,17 +121,53 @@ export class UserEffects {
           )
         )
 
-      /*user$ = createEffect(() =>
+      updateAFlashcard$ = createEffect(() => 
         this.actions$.pipe(
-          ofType(Login),
-          switchMap(({ formData: formData }) =>
-            this.userService.login(formData).pipe(
-              map((response) => { this.router.navigate(['/']);return LoginSuccess({user:response})} ),
-              catchError((error) => of(LoginFailure({ error:error })))
+          ofType(UpdateAFlashcard),
+          switchMap(({id,formData}) => 
+            this.flashcardService.updateAFlashcard(id,formData).pipe(
+              map((response) =>  UpdateAFlashcardSuccess({flashcard:<Flashcard>response}) ),
+              catchError((error) => of(UpdateAFlashcardFailure({ error:error })))
             )
           )
+          )
         )
-      );*/
+
+        createAStudyResource$ = createEffect(() => 
+          this.actions$.pipe(
+            ofType(CreateAStudyResource),
+            switchMap(({id,formData}) => 
+              this.studyResourceService.createAStudyResource(id,formData).pipe(
+                map((response) =>  CreateAStudyResourceSuccess({studyResource:<StudyResource>response}) ),
+                catchError((error) => of(CreateAStudyResourceFailure({ error:error })))
+              )
+            )
+            )
+          )
+
+          loadStudyResource$ = createEffect(() => 
+            this.actions$.pipe(
+              ofType(LoadStudyResources),
+              switchMap(() => 
+                this.studyResourceService.loadStudyResources().pipe(
+                  map((response) =>  LoadStudyResourcesSuccess({studyResources:<StudyResource[]>response}) ),
+                  catchError((error) => of(LoadStudyResourcesFailure({ error:error })))
+                )
+              )
+              )
+            )
+
+            loadMyStudyResource$ = createEffect(() => 
+              this.actions$.pipe(
+                ofType(LoadMyStudyResources),
+                switchMap(({id}) => 
+                  this.studyResourceService.loadMyStudyResources(id).pipe(
+                    map((response) =>  LoadMyStudyResourcesSuccess({studyResources:<StudyResource[]>response}) ),
+                    catchError((error) => of(LoadMyStudyResourcesFailure({ error:error })))
+                  )
+                )
+                )
+              )
 
 
 }

@@ -5,6 +5,7 @@ import { AppState } from './app.state';
 import { Observable, of } from 'rxjs';
 import { SelectAuthFeature } from './store/selectors/user.selector';
 import { Router } from '@angular/router';
+import { RehydrateAuth } from './store/actions/user.action';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +18,10 @@ export class AppComponent implements OnInit{
   constructor(
     private store:Store<AppState>,
     private router:Router
-  ){}
+  )
+  {
+    this.store.dispatch(RehydrateAuth())
+  }
 
   ngOnInit(): void {
     this.authenticated$ = this.store.select(SelectAuthFeature);

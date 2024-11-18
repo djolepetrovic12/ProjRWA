@@ -3,23 +3,23 @@ import { StudyResourceService } from './study-resource.service';
 import { CreateStudyResourceDto } from './dto/create-study-resource.dto';
 import { UpdateStudyResourceDto } from './dto/update-study-resource.dto';
 
-@Controller('study-resource')
+@Controller('studyResource')
 export class StudyResourceController {
   constructor(private readonly studyResourceService: StudyResourceService) {}
 
-  @Post('createStudyResource/:userid')
+  @Post('createAStudyResource/:userid')
   create(@Param('userid') userid:string ,@Body() createStudyResourceDto: CreateStudyResourceDto) {
     return this.studyResourceService.create(+userid,createStudyResourceDto);
   }
 
-  @Get()
+  @Get('findAll')
   findAll() {
     return this.studyResourceService.findAll();
   }
 
-  @Get(':id')
+  @Get('findAllForUser/:id')
   findOne(@Param('id') id: string) {
-    return this.studyResourceService.findOne(+id);
+    return this.studyResourceService.findAllForUser(+id);
   }
 
   @Patch(':id')

@@ -1,0 +1,15 @@
+mat-dialog-content{
+    min-width: 500px;
+    margin:20px 30px,
+}
+
+.flexflex
+{
+    padding:20px;
+    display:flex;
+    justify-content: start; /* Distributes items with space between */
+    align-items: center;           /* Aligns items vertically */
+    gap: 10px;  
+    flex-direction: row;
+}
+

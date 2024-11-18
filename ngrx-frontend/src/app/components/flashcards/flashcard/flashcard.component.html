@@ -1,5 +1,15 @@
 <mat-card class="example-card">
     <mat-card-content>
+        <mat-chip 
+        [style.background-color]=
+        "
+        flashcardInfo.type === 'word' ? '#1e90ff' :
+        flashcardInfo.type === 'phrase' ? '#4caf50' :
+        flashcardInfo.type === 'sentence' ? '#e91e63' :
+        flashcardInfo.type === 'general' ? '#9e9e9e' :
+        'transparent'
+        "
+        >{{flashcardInfo.type}}</mat-chip>
       <!-- First text section -->
       <p>{{flashcardInfo.content}}</p>
   

@@ -22,26 +22,20 @@ export const FlashcardReducer = createReducer(
         list:flashcards,
         error:null
     })),
+    on(FlashcardActions.CreateAFlashcardSuccess,(state,{flashcard}) => ({
+        ...state,
+        list: state.list ? [...state.list, flashcard] : [flashcard]
+    })),
     on(FlashcardActions.DeleteAFlashcardSuccess, (state, { id }) => ({
         ...state,
         list: state.list ? state.list.filter(fc => fc.id !== id) : null
-        //.list.filter(flashcard => flashcard.id !== id)
       })),
-    /*on(UserActions.LoginSuccess, (state, { user }) => ({
-        ...state,
-        Iam:user,
-        isAuthenticated: true,
-        error: null,
-      })),
-    on(UserActions.LogoutSuccess, (state) => ({
-        ...state,
-        Iam: null,
-        isAuthenticated: false,
-        error: null,
+    on(FlashcardActions.UpdateAFlashcardSuccess, (state, { flashcard }) => ({
+        ...state, list: state.list ? state.list.map(fc => fc.id === flashcard.id ? flashcard : fc) : null
     })),
-    on(UserActions.LogoutFailed, (state,{error}) => ({
+    on(FlashcardActions.UpdateAFlashcardFailure, (state, { error }) => ({
         ...state,
         error
-    })), */     
+    })),      
     )
 

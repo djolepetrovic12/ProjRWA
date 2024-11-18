@@ -46,8 +46,14 @@ export class FlashcardService {
     return `This action returns a #${id} flashcard`;
   }
 
-  update(id: number, updateFlashcardDto: UpdateFlashcardDto) {
-    return `This action updates a #${id} flashcard`;
+  async update(id: number, updateFlashcardDto: UpdateFlashcardDto) {
+    const updateResult = await this.flashcardRepository.update(id, updateFlashcardDto);
+
+  if (updateResult.affected === 0) {
+    throw new Error("failed to update");
+  }
+
+  return await this.flashcardRepository.findOneBy({ id });
   }
 
   remove(id: number) {

@@ -1,0 +1,64 @@
+<div class="forma">
+    <!--<h2 mat-dialog-title>Fill in the Form</h2>-->
+    <mat-dialog-content>
+      <!--<div class="login-container">-->
+        <h2>create a flashcard</h2>
+        <form [formGroup]="form" (submit)="submit()">
+            <div>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>content</mat-label>
+                    <input matInput formControlName="content" type="text" required class="form-control">
+                    @if (form.controls['content'].invalid && (form.controls['content'].touched || form.controls['content'].dirty))
+                    {
+                        @if(form.controls['content'].errors?.['required']){
+                            <mat-error>*note: this field is required</mat-error>
+                            
+                        }
+                        @if(form.controls['content'].errors?.['minlength']){
+                            <mat-error>*note: it needs to be at least 2 characters long</mat-error>
+                            
+                        }
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                    <mat-label>explanation</mat-label>
+                    <input matInput formControlName="explanation" type="text" required class="form-control" >
+                    @if (form.controls['explanation'].invalid && (form.controls['explanation'].touched || form.controls['explanation'].dirty))
+                    {
+                        @if(form.controls['explanation'].errors?.['required']){
+                            <mat-error>*note: this field is required</mat-error>
+                        }
+                        @if(form.controls['explanation'].errors?.['minlength']){
+                            <mat-error>*note: it needs to be at least 10 characters long</mat-error>
+                        }
+                    }
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="full-width">
+                  <mat-label>type</mat-label>
+                  <mat-select formControlName="type" required>
+                    <mat-option value="" disabled>Select a category</mat-option>
+                    <mat-option *ngFor="let option of fcOptions" [value]="option">
+                      {{ option }}
+                    </mat-option>
+                  </mat-select>
+                  @if (form.controls['type'].invalid && (form.controls['type'].touched || form.controls['type'].dirty))
+                    {
+                        @if(form.controls['type'].errors?.['required']){
+                            <mat-error>*note: please select a type</mat-error>
+                        }
+                }
+                </mat-form-field>
+                
+            </div>
+        </form>
+    <!--</div>-->
+    </mat-dialog-content>
+    </div>
+    <mat-dialog-actions align="end">
+        <div class="formButtonDiv">
+            <div class="formButton">
+                <button mat-button mat-dialog-close>Cancel</button>
+                <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid" (click)="submit()">Update</button>
+            </div>
+        </div>
+    </mat-dialog-actions>

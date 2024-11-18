@@ -1,0 +1,14 @@
+mat-card{
+    max-width: 400px;
+    margin:20px 30px,
+}
+
+.flexflex
+{
+    display:flex;
+    justify-content: start; /* Distributes items with space between */
+    align-items: center;           /* Aligns items vertically */
+    gap: 10px;  
+    flex-direction: row;
+}
+

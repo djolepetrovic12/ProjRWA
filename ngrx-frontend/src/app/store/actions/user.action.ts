@@ -1,7 +1,7 @@
 import { createAction, props } from '@ngrx/store';
 import { User } from '../../models/user';
 
-
+export const RehydrateAuth = createAction('Rehydrate me');
 export const Login = createAction('Login a user', props<{formData:any}>());
 export const LoginSuccess = createAction('Login Success', props<{ user: User }>());
 export const LoginFailure = createAction('Login Failure', props<{ error: string }>());

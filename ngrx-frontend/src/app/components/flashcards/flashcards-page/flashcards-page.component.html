@@ -1,3 +1,7 @@
+<button mat-flat-button (click)="openDialog()">
+    add a flashcard
+</button>
+
 <div *ngIf="flashcardsList$ | async as flashcards">
     <div *ngFor="let flashcard of flashcards">
       <app-flashcard [flashcardInfo]="flashcard"></app-flashcard>

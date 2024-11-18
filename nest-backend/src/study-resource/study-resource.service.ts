@@ -23,6 +23,7 @@ export class StudyResourceService {
 
     const SR = await this.studyResourceRepository.create({
       ...createStudyResourceDto,
+      comments:[],
       userID:user.id,
       user:user
     })
@@ -32,7 +33,11 @@ export class StudyResourceService {
   }
 
   findAll() {
-    return `This action returns all studyResource`;
+    return this.studyResourceRepository.find({relations:['user']});
+  }
+
+  findAllForUser(id:number) {
+    return this.studyResourceRepository.find({where:{userID:id},relations:['user']});
   }
 
   findOne(id: number) {

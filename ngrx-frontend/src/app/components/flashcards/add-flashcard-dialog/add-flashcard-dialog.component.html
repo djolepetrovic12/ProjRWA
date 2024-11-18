@@ -1,8 +1,8 @@
 
 <div class="forma">
-<h2 mat-dialog-title>Fill in the Form</h2>
+<!--<h2 mat-dialog-title>Fill in the Form</h2>-->
 <mat-dialog-content>
-  <div class="login-container">
+  <!--<div class="login-container">-->
     <h2>create a flashcard</h2>
     <form [formGroup]="form" (submit)="submit()">
         <div>
@@ -51,22 +51,18 @@
             </mat-form-field>
             
         </div>
-        <div class="formButtonDiv">
-            <div class="formButton">
-            <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">create</button>
-            </div>
-        </div>
-
-
     </form>
-</div>
+<!--</div>-->
 </mat-dialog-content>
 </div>
-<!--
 <mat-dialog-actions align="end">
-  <button mat-button mat-dialog-close>Cancel</button>
-  <button mat-button (click)="submit()">create</button>
-</mat-dialog-actions>-->
+    <div class="formButtonDiv">
+        <div class="formButton">
+            <button mat-button mat-dialog-close>Cancel</button>
+            <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid" (click)="submit()">Create</button>
+        </div>
+    </div>
+</mat-dialog-actions>
 <!--
 <mat-dialog-actions align="end">
   <button mat-button mat-dialog-close>Cancel</button>

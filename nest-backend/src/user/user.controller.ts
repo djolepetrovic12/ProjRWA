@@ -62,6 +62,7 @@ export class UserController {
     return korisnik;
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('user1')
   async user(@Req() request : Request){
     

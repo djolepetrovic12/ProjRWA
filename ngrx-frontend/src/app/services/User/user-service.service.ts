@@ -11,6 +11,10 @@ export class UserService {
 
   constructor(private httpClient:HttpClient) { }
 
+  getUserFromCookie() {
+    return this.httpClient.get<User>(this.userURL + 'user1',{withCredentials:true});
+  }
+
   login(formData:any) :Observable<User>
   {
     return this.httpClient.post<User>(this.userURL + 'login',formData,{withCredentials:true})
