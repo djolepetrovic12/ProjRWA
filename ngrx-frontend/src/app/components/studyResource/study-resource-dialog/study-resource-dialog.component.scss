@@ -1,15 +1,36 @@
-mat-dialog-content{
+.flexflex{
     min-width: 500px;
-    margin:20px 30px,
 }
 
-.flexflex
-{
-    padding:20px;
-    display:flex;
-    justify-content: start; /* Distributes items with space between */
-    align-items: center;           /* Aligns items vertically */
-    gap: 10px;  
-    flex-direction: row;
-}
 
+.comment-section {
+    width: 100%; /* Full width container */
+    max-width: 600px; /* Optional: Limit the width of the comment box */
+    margin: 20px auto; /* Center the box and add some spacing */
+  }
+  
+  .comment-input {
+    width: 90%;         /* Full width */
+    min-height: 40px;    /* Minimum height for the input */
+    max-height: 200px;   /* Optional: Prevent the box from growing too large */
+    padding: 10px;       /* Add padding for better readability */
+    font-size: 14px;  
+    font-family: 'Times New Roman', Times, serif;   /* Comfortable text size */
+    line-height: 1.5;    /* Spacing between lines */
+    border: 1px solid #ccc; /* Light gray border */
+    border-radius: 5px;  /* Slightly rounded corners */
+    resize: none;        /* Disable manual resizing */
+    overflow: hidden;    /* Hide the scrollbar */
+    box-sizing: border-box; /* Include padding and border in the size */
+    outline: none;       /* Remove the blue outline on focus */
+  }
+  
+  .comment-input:focus {
+    border-color: #007bff; /* Add a blue border when focused */
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Optional: subtle shadow */
+  }
+
+  mat-card {
+    margin: 10px 0px;
+  }
+  

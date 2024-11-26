@@ -22,8 +22,6 @@ export class AddFlashcardDialogComponent implements OnInit {
   
   constructor(
     private formBuilder:FormBuilder,
-    private httpClient:HttpClient,
-    private router:Router,
     private store:Store<AppState>,
     private matDialogRef: MatDialog
   ){}

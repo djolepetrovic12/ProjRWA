@@ -1,3 +1,11 @@
+
+<div>
+    <p>have a resource you want to upload?</p>
+    <button mat-flat-button (click)="openDialog()">
+        <mat-icon>upload_file</mat-icon> upload resource
+    </button>
+</div>
+
 <div *ngFor="let studyResource of studyResourcesList$ | async">
-    {{studyResource.title}}
+    <app-study-resource [studyResourceInfo]="studyResource" [myResources]="true"> </app-study-resource>
 </div>

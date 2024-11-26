@@ -15,6 +15,26 @@
                 </div>
         
         </mat-card>
+        <mat-card>
+            <div class="comment-section">
+            <textarea class="comment-input" id="myTextarea" placeholder="Write a comment..."></textarea>
+            </div>
+            <div>
+                <button mat-flat-button (click)="addComment()">
+                    add
+                </button>
+                <button mat-flat-button>
+                    cancel
+                </button>
+            </div>
+            
+        </mat-card>
+
+        <mat-card>
+            <div *ngFor="let comment of this.data.comments">
+                <app-comment-card [commentInfo]="comment"></app-comment-card>
+            </div>
+        </mat-card>
 
 
     </mat-dialog-content>

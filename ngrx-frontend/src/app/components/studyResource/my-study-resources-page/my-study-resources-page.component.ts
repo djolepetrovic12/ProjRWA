@@ -6,6 +6,8 @@ import { Store } from '@ngrx/store';
 import { SelectUserIDFeature } from '../../../store/selectors/user.selector';
 import { LoadMyStudyResources } from '../../../store/actions/studyResource.actions';
 import { SelectMyStudyResourcesFeature } from '../../../store/selectors/studyResource.selector';
+import { MatDialog } from '@angular/material/dialog';
+import { CreateAStudyResourceDialogComponent } from '../create-astudy-resource-dialog/create-astudy-resource-dialog.component';
 
 @Component({
   selector: 'app-my-study-resources-page',
@@ -19,6 +21,7 @@ export class MyStudyResourcesPageComponent implements OnInit {
   
   constructor(
     private store:Store<AppState>,
+    private matDialogRef:MatDialog
   ){}
   
   ngOnInit(): void {
@@ -33,6 +36,10 @@ export class MyStudyResourcesPageComponent implements OnInit {
 
   this.studyResourcesList$ = this.store.select(SelectMyStudyResourcesFeature);
     
+  }
+
+  openDialog(){
+    this.matDialogRef.open(CreateAStudyResourceDialogComponent);
   }
 
 }

@@ -3,11 +3,9 @@ import { IsDateString, IsNotEmpty, IsNumber, isNumber, IsString, MinLength } fro
 export class CreateCommentDto 
 {
     @IsString()
-    @MinLength(1)
+    @MinLength(5)
     @IsNotEmpty()
     content:string;
-    @IsDateString()
-    dateCreated:Date;
     @IsNumber()
     userID:number;
     @IsNumber()

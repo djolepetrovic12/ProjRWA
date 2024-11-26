@@ -12,7 +12,7 @@ export class StudyResourceService {
 
 
   createAStudyResource(id:number, formData:any){
-    return this.httpClient.post(this.studyResourceURL + 'createAStudyResource/' + id,{formData},{withCredentials:true});
+    return this.httpClient.post(this.studyResourceURL + 'createAStudyResource/' + id,formData,{withCredentials:true});
   }
 
   loadStudyResources(){
@@ -22,5 +22,14 @@ export class StudyResourceService {
   loadMyStudyResources(id:number){
     return this.httpClient.get(this.studyResourceURL + 'findAllForUser/' + id ,{withCredentials:true});
   }
+
+  updateMyStudyResource(id:number,formData:any){
+    return this.httpClient.patch(this.studyResourceURL + 'updateMyStudyResource/' + id, formData ,{withCredentials:true});
+  }
+
+  deleteMyStudyResource(id:number){
+    return this.httpClient.delete(this.studyResourceURL + 'deleteMyStudyResource/' + id,{withCredentials:true});
+  }
+
 
 }

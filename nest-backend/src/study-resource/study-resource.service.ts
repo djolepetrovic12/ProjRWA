@@ -23,32 +23,37 @@ export class StudyResourceService {
 
     const SR = await this.studyResourceRepository.create({
       ...createStudyResourceDto,
+      dateUploaded: new Date(),
       comments:[],
-      userID:user.id,
-      user:user
+      user
     })
     
-    
-    return await this.studyResourceRepository.save(SR);
+    await this.studyResourceRepository.save(SR);
+
+    return SR;
   }
 
   findAll() {
-    return this.studyResourceRepository.find({relations:['user']});
+    return this.studyResourceRepository.find({relations:['user','comments']});
   }
 
   findAllForUser(id:number) {
-    return this.studyResourceRepository.find({where:{userID:id},relations:['user']});
+    return this.studyResourceRepository.find({where:{userID:id},relations:['user','comments','comments.user']});
   }
 
   findOne(id: number) {
     return `This action returns a #${id} studyResource`;
   }
 
-  update(id: number, updateStudyResourceDto: UpdateStudyResourceDto) {
-    return `This action updates a #${id} studyResource`;
+  async update(id: number, updateStudyResourceDto: UpdateStudyResourceDto) {
+    await this.studyResourceRepository.update(id,updateStudyResourceDto);
+    return await this.studyResourceRepository.findOne({where:{id},relations:['user','comments']});
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} studyResource`;
+  async remove(id: number) {
+
+    await this.studyResourceRepository.delete(id);
+
+    return id;
   }
 }

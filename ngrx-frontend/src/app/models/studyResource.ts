@@ -1,3 +1,4 @@
+import { Comment } from "./comment";
 import { User } from "./user";
 
 
@@ -10,4 +11,5 @@ export interface StudyResource
     resourceLink:string,
     userID:number,
     user:User;
+    comments: Comment[]
 }

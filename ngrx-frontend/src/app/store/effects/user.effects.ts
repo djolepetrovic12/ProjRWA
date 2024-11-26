@@ -10,9 +10,28 @@ import { Router } from "@angular/router";
 import { CreateAFlashcard, CreateAFlashcardFailure, CreateAFlashcardSuccess, DeleteAFlashcard, DeleteAFlashcardFailure, DeleteAFlashcardSuccess, LoadFlashcards, LoadFlashcardsFailure, LoadFlashcardsSuccess, UpdateAFlashcard, UpdateAFlashcardFailure, UpdateAFlashcardSuccess } from "../actions/flashcard.actions";
 import { FlashcardService } from "../../services/Flashcard/flashcard.service";
 import { Flashcard } from "../../models/flashcard";
-import { CreateAStudyResource, CreateAStudyResourceFailure, CreateAStudyResourceSuccess, LoadMyStudyResources, LoadMyStudyResourcesFailure, LoadMyStudyResourcesSuccess, LoadStudyResources, LoadStudyResourcesFailure, LoadStudyResourcesSuccess } from "../actions/studyResource.actions";
+import { 
+  CreateAStudyResource, 
+  CreateAStudyResourceFailure, 
+  CreateAStudyResourceSuccess, 
+  DeleteMyStudyResource, 
+  DeleteMyStudyResourceFailure, 
+  DeleteMyStudyResourceSuccess, 
+  LoadMyStudyResources, 
+  LoadMyStudyResourcesFailure, 
+  LoadMyStudyResourcesSuccess, 
+  LoadStudyResources, 
+  LoadStudyResourcesFailure, 
+  LoadStudyResourcesSuccess, 
+  UpdateMyStudyResource, 
+  UpdateMyStudyResourceFailure, 
+  UpdateMyStudyResourceSuccess
+ } from "../actions/studyResource.actions";
 import { StudyResourceService } from "../../services/StudyResource/study-resource.service";
 import { StudyResource } from "../../models/studyResource";
+import { CreateAComment, CreateACommentFailure, CreateACommentSuccess } from "../actions/comment.actions";
+import { Comment } from "../../models/comment";
+import { CommentService } from "../../services/Comment/comment.service";
 
 
 
@@ -23,6 +42,7 @@ export class UserEffects {
     private userService: UserService,
     private flashcardService : FlashcardService,
     private studyResourceService : StudyResourceService,
+    private commentService: CommentService,
     private router:Router,
     private readonly store:Store<AppState>
   ) {}
@@ -168,6 +188,42 @@ export class UserEffects {
                 )
                 )
               )
+
+              updateMyStudyResource$ = createEffect(() => 
+                this.actions$.pipe(
+                  ofType(UpdateMyStudyResource),
+                  switchMap(({id,formData}) => 
+                    this.studyResourceService.updateMyStudyResource(id,formData).pipe(
+                      map((response) =>  UpdateMyStudyResourceSuccess({studyResource:<StudyResource>response}) ),
+                      catchError((error) => of(UpdateMyStudyResourceFailure({error:error })))
+                    )
+                  )
+                  )
+                )
+
+                deleteMyStudyResource$ = createEffect(() => 
+                  this.actions$.pipe(
+                    ofType(DeleteMyStudyResource),
+                    switchMap(({id}) => 
+                      this.studyResourceService.deleteMyStudyResource(id).pipe(
+                        map((response) => {console.log("hello") ;return DeleteMyStudyResourceSuccess({id:<number>response})}),
+                        catchError((error) => {console.log("bad hello :(") ;return of(DeleteMyStudyResourceFailure({error:error }))})
+                      )
+                    )
+                    )
+                  )
+
+                  createAComment$ = createEffect(() => 
+                    this.actions$.pipe(
+                      ofType(CreateAComment),
+                      switchMap(({userID,resourceID,content}) => 
+                        this.commentService.createAComment(userID,resourceID,content).pipe(
+                          map((response) =>  CreateACommentSuccess({comment:<Comment>response}) ),
+                          catchError((error) => of(CreateACommentFailure({ error:error })))
+                        )
+                      )
+                      )
+                    )
 
 
 }

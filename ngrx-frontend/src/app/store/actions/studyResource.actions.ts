@@ -14,3 +14,11 @@ export const LoadStudyResourcesFailure = createAction('Load study resources fail
 export const LoadMyStudyResources = createAction('Load my study resources',props<{id:number}>());
 export const LoadMyStudyResourcesSuccess = createAction('Load my study resources success',props<{studyResources:StudyResource[]}>());
 export const LoadMyStudyResourcesFailure = createAction('Load my study resources failure',props<{error:any}>());
+
+export const UpdateMyStudyResource = createAction('Update my study resource',props<{id:number,formData:any}>());
+export const UpdateMyStudyResourceSuccess = createAction('Update my study resource success',props<{studyResource:StudyResource}>());
+export const UpdateMyStudyResourceFailure = createAction('Update my study resource failure',props<{error:any}>());
+
+export const DeleteMyStudyResource = createAction('Delete my study resource',props<{id:number}>());
+export const DeleteMyStudyResourceSuccess = createAction('Delete my study resource success',props<{id:number}>());
+export const DeleteMyStudyResourceFailure = createAction('Delete my study resource failure',props<{error:any}>());

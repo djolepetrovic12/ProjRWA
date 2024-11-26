@@ -37,6 +37,11 @@ import { CreateAStudyResourceDialogComponent } from './components/studyResource/
 import { StudyResourceComponent } from './components/studyResource/study-resource/study-resource.component';
 import { StudyResourceDialogComponent } from './components/studyResource/study-resource-dialog/study-resource-dialog.component';
 import { MyStudyResourcesPageComponent } from './components/studyResource/my-study-resources-page/my-study-resources-page.component';
+import { MyStudyResourceTableComponent } from './components/studyResource/my-study-resource-table/my-study-resource-table.component';
+import {MatTable, MatTableModule} from '@angular/material/table';
+import { UpdateStudyResourceDialogComponent } from './components/studyResource/update-study-resource-dialog/update-study-resource-dialog.component';
+import { CreateStudyResourceDialogComponent } from './components/studyResource/create-study-resource-dialog/create-study-resource-dialog.component';
+import { CommentCardComponent } from './components/studyResource/comment-card/comment-card.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +60,10 @@ import { MyStudyResourcesPageComponent } from './components/studyResource/my-stu
     StudyResourceComponent,
     StudyResourceDialogComponent,
     MyStudyResourcesPageComponent,
+    MyStudyResourceTableComponent,
+    UpdateStudyResourceDialogComponent,
+    CreateStudyResourceDialogComponent,
+    CommentCardComponent,
   ],
   imports: [
     BrowserModule,
@@ -72,6 +81,8 @@ import { MyStudyResourcesPageComponent } from './components/studyResource/my-stu
     MatSelectModule,
     BrowserAnimationsModule,
     MatChipsModule,
+    MatTableModule,
+    MatTable,
     StoreModule.forRoot<AppState>({ user: UserReducer, flashcards:FlashcardReducer, studyResources:StudyResourceReducer}),
     EffectsModule.forRoot([UserEffects]),
     StoreDevtoolsModule.instrument({
