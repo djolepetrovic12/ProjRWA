@@ -71,7 +71,20 @@ export const StudyResourceReducer = createReducer(
     on(CommentActions.CreateACommentFailure, (state, {error}) => ({
         ...state,
         error
-    }))
+    })),
+    on(StudyResourceActions.DownloadStudyResourcesSuccess, (state, { fileBlob, fileName }) => {
+        // Download file immediately when success action is dispatched
+        if (fileBlob) {
+          const blobURL = window.URL.createObjectURL(fileBlob);
+          const link = document.createElement('a');
+          link.href = blobURL;
+          link.download = fileName; // You can make this dynamic
+          link.click();
+          window.URL.revokeObjectURL(blobURL); // Clean up
+        }
+    
+        return { ...state, fileBlob }; // Update state if necessary
+      }),
 
     
 )

@@ -17,6 +17,9 @@ import {
   DeleteMyStudyResource, 
   DeleteMyStudyResourceFailure, 
   DeleteMyStudyResourceSuccess, 
+  DownloadStudyResources, 
+  DownloadStudyResourcesFailure, 
+  DownloadStudyResourcesSuccess, 
   LoadMyStudyResources, 
   LoadMyStudyResourcesFailure, 
   LoadMyStudyResourcesSuccess, 
@@ -32,6 +35,7 @@ import { StudyResource } from "../../models/studyResource";
 import { CreateAComment, CreateACommentFailure, CreateACommentSuccess } from "../actions/comment.actions";
 import { Comment } from "../../models/comment";
 import { CommentService } from "../../services/Comment/comment.service";
+import { HttpResponse } from "@angular/common/http";
 
 
 
@@ -224,6 +228,22 @@ export class UserEffects {
                       )
                       )
                     )
+
+                    downloadStudyResource$ = createEffect(() => 
+                      this.actions$.pipe(
+                        ofType(DownloadStudyResources),
+                        switchMap(({resourceID}) => 
+                          this.studyResourceService.downloadMyStudyResource(resourceID).pipe(
+                            map((response: HttpResponse<Blob>) =>{
+                              const contentDisposition = response.headers.get('Content-Disposition');
+                              console.log(contentDisposition);
+                              const fileName = contentDisposition?.split('filename=')[1]?.replace(/"/g, '') || 'downloaded-file.pdf';
+                              return DownloadStudyResourcesSuccess({resourceID,fileBlob:response.body!,fileName})}),
+                            catchError((error) => of(DownloadStudyResourcesFailure({ error:error })))
+                          )
+                        )
+                        )
+                      )
 
 
 }

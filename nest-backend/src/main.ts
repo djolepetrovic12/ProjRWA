@@ -13,7 +13,8 @@ async function bootstrap() {
   app.enableCors({
     origin:['http://localhost:3000','http://localhost:4200'],
     methods:'GET,POST,PUT,DELETE,PATCH',
-    credentials:true
+    credentials:true,
+    exposedHeaders: ['Content-Disposition']
   });
 
   app.useGlobalPipes(
@@ -27,5 +28,7 @@ async function bootstrap() {
   app.useStaticAssets(join(__dirname, '..', 'uploads'));
 
   await app.listen(process.env.PORT ?? 3000);
+
+
 }
 bootstrap();

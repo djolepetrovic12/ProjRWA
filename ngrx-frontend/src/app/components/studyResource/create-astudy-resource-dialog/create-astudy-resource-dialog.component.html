@@ -43,6 +43,7 @@
                             Choose File
                           </button>
                         <input #fileInput tabindex="-1" hidden formControlName="file" type="file" required class="form-control" (change)="onFileSelected($event)">
+                        <mat-hint *ngIf="selectedFile">you have selected: {{ selectedFile.name }}</mat-hint>
                     <!--</label>-->
                     <!--<button mat-button color="primary" (click)="fileInput.click()" type="button">
                       Choose File

@@ -6,6 +6,9 @@ export const CreateAStudyResource = createAction('Create a study resource',props
 export const CreateAStudyResourceSuccess = createAction('Create a study resource success',props<{studyResource:StudyResource}>());
 export const CreateAStudyResourceFailure = createAction('Create a study resource failure',props<{error:any}>());
 
+export const DownloadStudyResources = createAction('Download study resources',props<{resourceID:number}>());
+export const DownloadStudyResourcesSuccess = createAction('Download study resources success',props<{ resourceID: number; fileBlob: Blob, fileName: string }>());
+export const DownloadStudyResourcesFailure = createAction('Download study resources failure',props<{error:any}>());
 
 export const LoadStudyResources = createAction('Load study resources');
 export const LoadStudyResourcesSuccess = createAction('Load study resources success',props<{studyResources:StudyResource[]}>());

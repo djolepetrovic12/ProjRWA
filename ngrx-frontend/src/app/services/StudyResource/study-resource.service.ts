@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-
+import { blob } from 'stream/consumers';
+ 
 @Injectable({
   providedIn: 'root'
 })
@@ -31,5 +32,8 @@ export class StudyResourceService {
     return this.httpClient.delete(this.studyResourceURL + 'deleteMyStudyResource/' + id,{withCredentials:true});
   }
 
+  downloadMyStudyResource(resourceID:number){
+    return this.httpClient.get(this.studyResourceURL + 'downloadMyStudyResource/' + resourceID,{withCredentials:true, responseType:'blob',observe: 'response'});
+  }
 
 }
