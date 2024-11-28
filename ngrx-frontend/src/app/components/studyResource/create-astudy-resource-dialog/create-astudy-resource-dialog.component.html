@@ -3,7 +3,7 @@
     <!--<h2 mat-dialog-title>Fill in the Form</h2>-->
     <mat-dialog-content>
       <!--<div class="login-container">-->
-        <h2>create a flashcard</h2>
+        <h2>Upload a file</h2>
         <form [formGroup]="form" (submit)="submit()">
             <div>
                 <mat-form-field appearance="outline" class="full-width">
@@ -42,7 +42,7 @@
                         <button mat-button color="primary" (click)="fileInput.click()" type="button" cdkFocusInitial>
                             Choose File
                           </button>
-                        <input #fileInput tabindex="-1" hidden formControlName="file" type="file" required class="form-control" (change)="onFileSelected($event)">
+                        <input #fileInput tabindex="-1" hidden formControlName="file"  accept="application/pdf" type="file" required class="form-control" (change)="onFileSelected($event)">
                         <mat-hint *ngIf="selectedFile">you have selected: {{ selectedFile.name }}</mat-hint>
                     <!--</label>-->
                     <!--<button mat-button color="primary" (click)="fileInput.click()" type="button">
@@ -80,7 +80,7 @@
         <div class="formButtonDiv">
             <div class="formButton">
                 <button mat-button mat-dialog-close>Cancel</button>
-                <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid" (click)="submit()">Update</button>
+                <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid" (click)="submit()">Upload file</button>
             </div>
         </div>
     </mat-dialog-actions>

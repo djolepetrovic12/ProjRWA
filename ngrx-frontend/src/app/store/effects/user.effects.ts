@@ -26,6 +26,12 @@ import {
   LoadStudyResources, 
   LoadStudyResourcesFailure, 
   LoadStudyResourcesSuccess, 
+  SearchItems, 
+  SearchItemsFailure, 
+  SearchItemsSuccess, 
+  SearchProfessors, 
+  SearchProfessorsFailure, 
+  SearchProfessorsSuccess, 
   UpdateMyStudyResource, 
   UpdateMyStudyResourceFailure, 
   UpdateMyStudyResourceSuccess
@@ -244,6 +250,32 @@ export class UserEffects {
                         )
                         )
                       )
+
+
+                      searchItems$ = createEffect(() => 
+                        this.actions$.pipe(
+                          ofType(SearchItems),
+                          switchMap(({query}) => 
+                            this.studyResourceService.searchMyStudyResources(query).pipe(
+                              map((response) =>  {console.log(response) ;return SearchItemsSuccess({studyResources:<StudyResource[]>response}) } ),
+                              catchError((error) => { console.log(error);return of(SearchItemsFailure({ error:error }))})
+                            )
+                          )
+                          )
+                        )
+                    
+                        searchProfessors$ = createEffect(() => 
+                          this.actions$.pipe(
+                            ofType(SearchProfessors),
+                            switchMap(({query}) => 
+                              this.studyResourceService.searchProfessors(query).pipe(
+                                map((response) =>  {console.log(response) ;return SearchProfessorsSuccess({professors:<User[]>response}) } ),
+                                catchError((error) => { console.log(error);return of(SearchProfessorsFailure({ error:error }))})
+                              )
+                            )
+                            )
+                          )
+                        
 
 
 }

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, BadRequestException, NotFoundException, Query } from '@nestjs/common';
 import { StudyResourceService } from './study-resource.service';
 import { CreateStudyResourceDto } from './dto/create-study-resource.dto';
 import { UpdateStudyResourceDto } from './dto/update-study-resource.dto';
@@ -29,15 +29,9 @@ export class StudyResourceController {
           
           // Check if the folder exists, and create it if not
           if (!fs.existsSync(userFolder)) {
-            Logger.log("askdjasldk");
             fs.mkdirSync(userFolder, { recursive: true });
-            Logger.log(`file successfully created ${userFolder}`)
+            //Logger.log(`folder successfully created ${userFolder}`)
           }
-          else
-          {
-            Logger.log('folder already exists')
-          }
-          Logger.log("hello")
   
           cb(null, userFolder); // Set the destination folder for the file
         },
@@ -46,6 +40,14 @@ export class StudyResourceController {
           callback(null, `${uniqueSuffix}-${file.originalname}`);
         },
       }),
+      fileFilter: (req, file, cb) => {
+        // Restrict uploads to only PDF files
+        if (file.mimetype !== 'application/pdf') {
+          cb(new BadRequestException('Only PDF files are allowed'), false);
+        } else {
+          cb(null, true);
+        }
+      },
     }),
   )
   create(@Param('userid') userid:string, @UploadedFile() file: Express.Multer.File ,@Body() createStudyResourceDto: CreateStudyResourceDto) {
@@ -56,15 +58,7 @@ export class StudyResourceController {
 
   @Get('downloadMyStudyResource/:resourceID')
   async downloadMyStudyResource(@Param('resourceID') resourceID:number,@Res() res: Response){
-    const relFilePath= await this.studyResourceService.downloadMyStudyResource(resourceID);
-
-    /*const rfp = relFilePath.split('/');
-
-    const filePath = `/${rfp[1]}/${rfp[2]}`;
-    const fileName = `${rfp[3]}`;
-
-    Logger.log(filePath);
-    Logger.log(fileName)*/
+    const relFilePath= await this.studyResourceService.findMyStudyResource(resourceID);
     
     const absoluteFilePath = path.resolve(__dirname, '..', 'uploads', relFilePath);
 
@@ -106,6 +100,35 @@ export class StudyResourceController {
 
   @Delete('deleteMyStudyResource/:id')
   async remove(@Param('id') id: string) {
+
+  const relFilePath= await this.studyResourceService.findMyStudyResource(+id);
+    
+  const absoluteFilePath = path.resolve(__dirname, '..', 'uploads', relFilePath);
+
+  Logger.log(`Absolute file path: ${absoluteFilePath}`);
+
+  if (!fs.existsSync(absoluteFilePath)) {
+    Logger.error('File not found:', absoluteFilePath);
+  }
+
+  try {
+    fs.unlinkSync(absoluteFilePath);
+  } catch (error) {
+    throw new NotFoundException('Could not delete the file');
+  }
+
+
     return this.studyResourceService.remove(+id);
   }
+
+  @Get('searchItems') 
+  searchItems(@Query('query') query: string) {
+    return this.studyResourceService.searchItems(query);
+  }
+
+  @Get('searchProfessors')
+  searchProfessors(@Query('query') query: string) {
+    return this.studyResourceService.searchProfessors(query);
+  }
+
 }

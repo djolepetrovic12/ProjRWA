@@ -1,3 +1,31 @@
+<div>
+    <mat-form-field class="example-full-width">
+        <mat-label>Search Professors</mat-label>
+        <input matInput [formControl]="searchProfsControl"
+        placeholder="Search professors..." 
+        class="search-input"
+        [matAutocomplete]="auto"
+        >
+        <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)" >
+            <mat-option *ngFor="let suggestion of professorsList$" [value]="suggestion.name" (click)="addUser(suggestion)">
+            {{ suggestion.name }} {{suggestion.surname}}
+            </mat-option>
+        </mat-autocomplete>
+    </mat-form-field>
+</div>
+
+
+<div class="search-container">
+    <input 
+      [formControl]="searchControl" 
+      placeholder="Search resources..." 
+      class="search-input"
+    />
+</div>
+
+
+======================================================================================
+
 <div *ngFor="let studyResource of studyResourcesList$ | async">
 <app-study-resource [studyResourceInfo]="studyResource" ></app-study-resource>
 </div>

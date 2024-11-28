@@ -4,7 +4,7 @@ import { StudyResource } from '../../../models/studyResource';
 import { AppState } from '../../../app.state';
 import { Store } from '@ngrx/store';
 import { SelectUserIDFeature } from '../../../store/selectors/user.selector';
-import { LoadMyStudyResources } from '../../../store/actions/studyResource.actions';
+import { LoadMyStudyResources, SearchItems } from '../../../store/actions/studyResource.actions';
 import { SelectMyStudyResourcesFeature } from '../../../store/selectors/studyResource.selector';
 import { MatDialog } from '@angular/material/dialog';
 import { CreateAStudyResourceDialogComponent } from '../create-astudy-resource-dialog/create-astudy-resource-dialog.component';
@@ -15,6 +15,7 @@ import { CreateAStudyResourceDialogComponent } from '../create-astudy-resource-d
   styleUrl: './my-study-resources-page.component.scss'
 })
 export class MyStudyResourcesPageComponent implements OnInit {
+
 
   studyResourcesList$ : Observable<StudyResource[] | null>
   UserID$ : Observable<number | undefined>;
@@ -41,5 +42,7 @@ export class MyStudyResourcesPageComponent implements OnInit {
   openDialog(){
     this.matDialogRef.open(CreateAStudyResourceDialogComponent);
   }
+
+
 
 }

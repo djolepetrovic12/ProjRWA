@@ -42,6 +42,7 @@ import {MatTable, MatTableModule} from '@angular/material/table';
 import { UpdateStudyResourceDialogComponent } from './components/studyResource/update-study-resource-dialog/update-study-resource-dialog.component';
 import { CreateStudyResourceDialogComponent } from './components/studyResource/create-study-resource-dialog/create-study-resource-dialog.component';
 import { CommentCardComponent } from './components/studyResource/comment-card/comment-card.component';
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
 @NgModule({
   declarations: [
@@ -83,6 +84,7 @@ import { CommentCardComponent } from './components/studyResource/comment-card/co
     MatChipsModule,
     MatTableModule,
     MatTable,
+    MatAutocompleteModule,
     StoreModule.forRoot<AppState>({ user: UserReducer, flashcards:FlashcardReducer, studyResources:StudyResourceReducer}),
     EffectsModule.forRoot([UserEffects]),
     StoreDevtoolsModule.instrument({

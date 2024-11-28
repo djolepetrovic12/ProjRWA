@@ -3,7 +3,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { DataSource, Repository } from 'typeorm';
+import { DataSource, Like, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
@@ -21,6 +21,9 @@ export class UserService {
   async findUser(email:string): Promise<User>  {
     return this.userRepository.findOne({where: {email}});
   }
+
+  
+
 
   findAll() {
     return `This action returns all user`;

@@ -3,7 +3,7 @@ import { CreateStudyResourceDto } from './dto/create-study-resource.dto';
 import { UpdateStudyResourceDto } from './dto/update-study-resource.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { Repository } from 'typeorm';
+import { Brackets, Like, Repository } from 'typeorm';
 import { StudyResource } from './entities/study-resource.entity';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -60,7 +60,7 @@ export class StudyResourceService {
     return id;
   }
 
-  async downloadMyStudyResource(resourceID: number) {
+  async findMyStudyResource(resourceID: number) {
 
     const studyResource = await this.studyResourceRepository.findOneBy({id:resourceID});
 
@@ -69,14 +69,44 @@ export class StudyResourceService {
 
 
     const absoluteFilePath = path.resolve(__dirname, '..', 'uploads', studyResource.resourceLink);
-    if(!fs.existsSync(absoluteFilePath))
+    /*if(!fs.existsSync(absoluteFilePath))
     {
       console.log('nema fajla')
       throw new NotFoundException('File not found');
-    }
+    }*/
 
     return studyResource.resourceLink;
     
   }
+
+  searchItems(query: string) {
+     if (query) {
+       return this.studyResourceRepository.find({
+        where: { title: Like(`%${query}%`) },
+        relations: ['user', 'comments', 'comments.user'], 
+      }); }
+      else {
+        return this.studyResourceRepository.find({ relations: ['user', 'comments', 'comments.user'] }); 
+      } 
+    }
+
+    searchProfessors(query: string) {
+      console.log('hello from the function')
+      if (query) {
+        return this.userRepository.createQueryBuilder('user')
+        .where(
+          new Brackets(qb => {
+            qb.where('user.name LIKE :query', { query: `%${query}%` })
+              .orWhere('user.surname LIKE :query', { query: `%${query}%` });
+          })
+        )
+        .andWhere('user.role = :role', { role: 'PROFESSOR' })
+        .getMany();
+       }
+       else {
+         return this.userRepository.find(); 
+       } 
+      
+     }
 
 }

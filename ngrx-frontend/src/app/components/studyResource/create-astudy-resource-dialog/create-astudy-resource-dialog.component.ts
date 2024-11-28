@@ -37,7 +37,14 @@ export class CreateAStudyResourceDialogComponent implements OnInit {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files[0]) {
       this.selectedFile = input.files[0];
+
+      if (this.selectedFile.type !== 'application/pdf') {
+        alert('Only PDF files are allowed!');
+        return;
+      }
+
     }
+
   }
 
   submit(){
