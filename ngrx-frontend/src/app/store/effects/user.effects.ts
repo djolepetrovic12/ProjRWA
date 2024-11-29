@@ -61,7 +61,7 @@ export class UserEffects {
     this.actions$.pipe(
       ofType(RehydrateAuth),
       switchMap(() =>
-        this.userService.getUserFromCookie().pipe(
+        this.userService.getCurrentUser().pipe(
           map(response => {this.router.navigate(['/']);return LoginSuccess({user:response})}),
           catchError((error) => of(LoginFailure({ error })))
         )
@@ -255,10 +255,10 @@ export class UserEffects {
                       searchItems$ = createEffect(() => 
                         this.actions$.pipe(
                           ofType(SearchItems),
-                          switchMap(({query}) => 
-                            this.studyResourceService.searchMyStudyResources(query).pipe(
-                              map((response) =>  {console.log(response) ;return SearchItemsSuccess({studyResources:<StudyResource[]>response}) } ),
-                              catchError((error) => { console.log(error);return of(SearchItemsFailure({ error:error }))})
+                          switchMap(({query,professorIDs}) => 
+                            this.studyResourceService.searchMyStudyResources(query,professorIDs).pipe(
+                              map((response) =>  {console.log(response) ;return LoadStudyResourcesSuccess({studyResources:<StudyResource[]>response}) } ),
+                              catchError((error) => { console.log(error);return of(LoadStudyResourcesFailure({ error:error }))})
                             )
                           )
                           )

@@ -1,60 +1,33 @@
 <mat-toolbar class="mat-elevation-z3">
-  <span><a routerLink="/flashcard">NazivAplikacije</a></span>
-
+  <div class="mainDiv">
+  <div>
+  <a routerLink="/"><img src="../../../assets/myLogoRWA.png" height="60" width="170"></a>
+  </div>
  
 
-  <div class="spacerr"></div>
+  <div class="spacerr">
 
-  <span *ngIf="authenticated$ | async; else falseTemplate">
-    <span>
-      <a mat-flat-button routerLink="/flashcards" color="accent">flashcards</a>
+  <div *ngIf="authenticated$ | async; else falseTemplate">
+    <span *ngIf="(userRole$ | async ) === 'PROFESSOR' || (userRole$ | async ) === 'STUDENT' ">
+      <a mat-flat-button class="buttons" routerLink="/flashcards" color="accent">flashcards</a>
     </span> 
-    <span>
-      <a mat-flat-button routerLink="/studyResources" color="accent">resources</a>
+    <span *ngIf="(userRole$ | async ) === 'PROFESSOR' || (userRole$ | async ) === 'STUDENT' || (userRole$ | async ) === 'ADMIN' ">
+      <a mat-flat-button class="buttons" routerLink="/studyResources" color="accent">resources</a>
     </span>
-    <span>
-      <a mat-flat-button routerLink="/myStudyResources" color="accent">my resources</a>
+    <span *ngIf="(userRole$ | async ) === 'PROFESSOR'">
+      <a mat-flat-button class="buttons" routerLink="/myStudyResources" color="accent">my resources</a>
     </span>
 
     <span>
-      <a mat-icon-button (click)="logout()"> <mat-icon>logout</mat-icon> </a>
+      <a mat-icon-button class="buttons" (click)="logout()"> <mat-icon>logout</mat-icon> </a>
     </span> 
-  </span>
+  </div>
   <ng-template #falseTemplate>
     <span>
-      <a mat-button routerLink="/login">Log in</a>
-      <a mat-flat-button routerLink="/register" color="accent">Sign up</a>
+      <a mat-button class="buttons" routerLink="/login">Log in</a>
+      <a mat-flat-button class="buttons" routerLink="/register" color="accent">Sign up</a>
     </span>
   </ng-template>
-    
+  </div>
+  </div>
 </mat-toolbar>
-
-
-
-
-
-
-
-<!--<nav class="navbar navbar-expand-lg bg-body-tertiary">
-    <div class="container-fluid">
-      <a class="navbar-brand" routerLink="/">Home</a>
-
-      <div>
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="!authenticated">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/login">login</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/register">Register</a>
-          </li>
-        </ul>
-
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="authenticated">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" routerLink="/login" (click)="logout()">logout</a>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
--->

@@ -1,4 +1,5 @@
 <div>
+    <span>
     <mat-form-field class="example-full-width">
         <mat-label>Search Professors</mat-label>
         <input matInput [formControl]="searchProfsControl"
@@ -12,6 +13,11 @@
             </mat-option>
         </mat-autocomplete>
     </mat-form-field>
+</span>
+<span>selected professors: </span> 
+<span *ngFor="let prof of selectedProfessors$ | async">
+    <span><mat-chip (click)="removeUser(prof)"> {{prof.name}} {{prof.surname}} </mat-chip></span> 
+</span>
 </div>
 
 

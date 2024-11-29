@@ -3,7 +3,7 @@ import { CreateStudyResourceDto } from './dto/create-study-resource.dto';
 import { UpdateStudyResourceDto } from './dto/update-study-resource.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from 'src/user/entities/user.entity';
-import { Brackets, Like, Repository } from 'typeorm';
+import { Brackets, In, Like, Repository } from 'typeorm';
 import { StudyResource } from './entities/study-resource.entity';
 import * as fs from 'fs';
 import * as path from 'path';
@@ -79,12 +79,22 @@ export class StudyResourceService {
     
   }
 
-  searchItems(query: string) {
-     if (query) {
+  searchItems(query: string,professorIDs: number[] = []) {
+     if (query && professorIDs.length > 0) {
        return this.studyResourceRepository.find({
-        where: { title: Like(`%${query}%`) },
+        where: { 
+          title: Like(`%${query}%`),
+          userID: In(professorIDs)
+        },
         relations: ['user', 'comments', 'comments.user'], 
-      }); }
+      });
+      }
+      else if (query) {
+        return this.studyResourceRepository.find({
+          where: { title: Like(`%${query}%`) },
+          relations: ['user', 'comments', 'comments.user'],
+        });
+      } 
       else {
         return this.studyResourceRepository.find({ relations: ['user', 'comments', 'comments.user'] }); 
       } 

@@ -1,3 +1,8 @@
+
+body {
+  overflow: hidden;
+}
+
 small 
 {
     color:red;
@@ -10,6 +15,7 @@ small
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background-color: white;
   }
   
   h2 {
@@ -45,3 +51,25 @@ small
   .mat-form-field {
     width: 100%;
   }
+
+  .register-page {
+    height: 100%;
+    //width: vw;
+    z-index: -1;
+    background-image: url('../../../assets/background-1.jpg'); /* Path to your background image */
+    background-size: cover; /* Ensures the image covers the entire area */
+    background-repeat: no-repeat; /* Prevents the image from repeating */
+    background-position: center; /* Centers the image */
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically */
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .everything-else
+  {
+    z-index: 1;
+    
+  }
+  

@@ -11,7 +11,7 @@ export class UserService {
 
   constructor(private httpClient:HttpClient) { }
 
-  getUserFromCookie() {
+  getCurrentUser() {
     return this.httpClient.get<User>(this.userURL + 'user1',{withCredentials:true});
   }
 

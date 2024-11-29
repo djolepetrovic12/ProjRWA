@@ -36,8 +36,8 @@ export class StudyResourceService {
     return this.httpClient.get(this.studyResourceURL + 'downloadMyStudyResource/' + resourceID,{withCredentials:true, responseType:'blob',observe: 'response'});
   }
 
-  searchMyStudyResources(query:string){
-    return this.httpClient.get(this.studyResourceURL + 'searchItems/',{params: {query}, withCredentials:true});
+  searchMyStudyResources(query:string,professorIDs:number[]){
+    return this.httpClient.get(this.studyResourceURL + 'searchItems/',{params: {query,professorIDs}, withCredentials:true});
   }
 
   searchProfessors(query:string)

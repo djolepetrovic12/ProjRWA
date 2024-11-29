@@ -122,8 +122,8 @@ export class StudyResourceController {
   }
 
   @Get('searchItems') 
-  searchItems(@Query('query') query: string) {
-    return this.studyResourceService.searchItems(query);
+  searchItems(@Query('query') query: string, @Query('professorIDs') professorIDs: number[]) {
+    return this.studyResourceService.searchItems(query,professorIDs);
   }
 
   @Get('searchProfessors')

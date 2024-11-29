@@ -8,15 +8,60 @@ import { FlashcardComponent } from './components/flashcards/flashcard/flashcard.
 import { FlashcardsPageComponent } from './components/flashcards/flashcards-page/flashcards-page.component';
 import { StudyResourcesPageComponent } from './components/studyResource/study-resources-page/study-resources-page.component';
 import { MyStudyResourcesPageComponent } from './components/studyResource/my-study-resources-page/my-study-resources-page.component';
+import { RoleGuard } from './guards/roles.guard';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 const routes: Routes = [
-  {path:'',component:HomeComponent},
-  {path:'login',component:LoginComponent},
-  {path:'register',component:RegisterComponent},
-  {path:'mainpage', component:MainpageComponent},
-  {path:'flashcards',component:FlashcardsPageComponent},
-  {path:'studyResources',component:StudyResourcesPageComponent},
-  {path:'myStudyResources',component:MyStudyResourcesPageComponent}
+
+  {
+    path:'',
+    component:HomeComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRoles: ['ADMIN', 'PROFESSOR', 'STUDENT']
+    }
+  },
+  {
+    path:'login',
+    component:LoginComponent
+  },
+  {
+    path:'register',
+    component:RegisterComponent
+  },
+  {
+    path:'mainpage', 
+    component:MainpageComponent
+  },
+  {
+    path:'flashcards',
+    component:FlashcardsPageComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRoles: ['PROFESSOR', 'STUDENT']
+    }
+  },
+  {
+    path:'studyResources',
+    component:StudyResourcesPageComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRoles: ['ADMIN', 'PROFESSOR', 'STUDENT']
+    }
+  },
+  {
+    path:'myStudyResources',
+    component:MyStudyResourcesPageComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRoles: ['PROFESSOR']
+    }
+  },
+  {
+    path:'unauthorized',
+    component:UnauthorizedComponent
+  }
+
 ];
 
 @NgModule({

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { BehaviorSubject, debounceTime, distinctUntilChanged, filter, Observable, take } from 'rxjs';
+import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, filter, map, merge, Observable, take, withLatestFrom } from 'rxjs';
 import { StudyResource } from '../../../models/studyResource';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
@@ -37,7 +37,7 @@ export class StudyResourcesPageComponent implements OnInit{
   ){
     this.studyResourcesList$ = this.store.select(SelectStudyResourcesFeature);
 
-    this.searchControl.valueChanges
+    /*this.searchControl.valueChanges
       .pipe(
         debounceTime(500), // Wait 300ms after the user stops typing
         distinctUntilChanged(), // Prevent duplicate queries
@@ -46,7 +46,7 @@ export class StudyResourcesPageComponent implements OnInit{
       .subscribe((query) => {
         if(query)
         this.store.dispatch(SearchItems({ query })); // Dispatch the search action
-      });
+      });*/
 
     this.searchProfsControl.valueChanges
     .pipe(
@@ -88,6 +88,42 @@ export class StudyResourcesPageComponent implements OnInit{
       }
   })
 
+
+  /*this.searchControl.valueChanges
+  .pipe(
+    debounceTime(500),
+    distinctUntilChanged(),
+    filter((query) => (query as string).length > 3),
+    withLatestFrom(this.selectedProfessors$) // Combine with the latest professors
+  )*/
+  combineLatest([
+    this.searchControl.valueChanges.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      filter((query) => (query as string).length > 3)
+    ),
+    this.selectedProfessors$ // Emits the latest professors
+  ])
+  .subscribe(([query, users]) => {
+    const selectedIds = users.map((user) => user.id); // Extract IDs dynamically
+    console.log('Search query:', query);
+    console.log('Selected Professor IDs:', selectedIds);
+
+    if(query)
+    this.store.dispatch(
+      SearchItems({
+        query,
+        professorIDs: selectedIds ?? [],
+      })
+    );
+  });
+
+
+
+
+
+
+
   }
 
   openDialog()
@@ -101,8 +137,14 @@ export class StudyResourcesPageComponent implements OnInit{
 
   addUser(user: User) {
     const currentProfessors = this.selectedProfessorsSubject.getValue(); // Get current array
+
+    // Check if the user already exists in the list by comparing their id
+    const userExists = currentProfessors.some(professor => professor.id === user.id);
+
+    if (!userExists) {
     const updatedProfessors = [...currentProfessors, user]; // Add the new user
     this.selectedProfessorsSubject.next(updatedProfessors); // Emit updated array
+    }
   }
 
   // Optional: Method to remove a user from the selected list

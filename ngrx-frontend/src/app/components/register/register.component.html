@@ -1,3 +1,7 @@
+<div class="register-page">
+
+<div class="everything-else">
+
 
 <div class="login-container" >
 
@@ -81,7 +85,22 @@
                 <mat-error>*note: minimum password length is 8</mat-error>
             }
         }
-        </mat-form-field> 
+        </mat-form-field>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>type</mat-label>
+            <mat-select formControlName="role" required>
+              <mat-option value="" disabled>Select an account type</mat-option>
+              <mat-option *ngFor="let option of fcOptions" [value]="option.toUpperCase()">
+                {{ option }}
+              </mat-option>
+            </mat-select>
+            @if (form.controls['role'].invalid && (form.controls['role'].touched || form.controls['role'].dirty))
+              {
+                  @if(form.controls['role'].errors?.['required']){
+                      <mat-error>*note: please select a type</mat-error>
+                  }
+          }
+          </mat-form-field> 
         <div class="formButtonDiv">
             <div class="formButton">
                 <button mat-flat-button type="submit" [disabled]="form.invalid">register</button>
@@ -89,4 +108,6 @@
         </div>
 
     </form>
+    </div>
+    </div>
 </div>

@@ -16,6 +16,7 @@ export class RegisterComponent implements OnInit{
 
 
   form: FormGroup;
+  fcOptions :string[] = ['professor','student'];
 
   constructor(
     private formBuilder:FormBuilder, 
@@ -32,6 +33,7 @@ export class RegisterComponent implements OnInit{
       //kad pravis tekst iznad ovog polja, napisi sledece: username must start with a letter or number, can't contain two consecutive dots or underscores and must end with a letter or number
       username:['',[Validators.pattern("^[a-zA-Z0-9](?!.*[._]{2})[a-zA-Z0-9._]{1,18}[a-zA-Z0-9]$"),Validators.minLength(3),Validators.required]],
       email:['',[Validators.required,Validators.email]],
+      role:['',[Validators.required]],
       //obavezno za lozinke dodaj regex koji dozvoljava samo jake sifre
       password:['',[Validators.required,Validators.minLength(8),]]
     });

@@ -1,3 +1,28 @@
+.mainDiv
+{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+
 .spacerr {
-    flex: 1 1 auto;
-  }
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.buttons {
+  //display: flex; /* Ensure buttons use Flexbox */
+  align-items: center; /* Center content inside buttons */
+  justify-content: center; /* Center content horizontally */
+  height: 40px; /* Set a consistent height for all buttons */
+}
+
+mat-icon-button {
+  //display: flex;
+  align-items: center; /* Center the icon vertically */
+  justify-content: center; /* Center the icon horizontally */
+  height: 40px; /* Match height with flat buttons */
+  width: 40px; /* Make it a square button */
+}

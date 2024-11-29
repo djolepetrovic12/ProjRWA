@@ -43,6 +43,8 @@ import { UpdateStudyResourceDialogComponent } from './components/studyResource/u
 import { CreateStudyResourceDialogComponent } from './components/studyResource/create-study-resource-dialog/create-study-resource-dialog.component';
 import { CommentCardComponent } from './components/studyResource/comment-card/comment-card.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { RoleGuard } from '../app/guards/roles.guard';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +67,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     UpdateStudyResourceDialogComponent,
     CreateStudyResourceDialogComponent,
     CommentCardComponent,
+    UnauthorizedComponent,
   ],
   imports: [
     BrowserModule,
@@ -94,6 +97,7 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
 
   ],
   providers: [
+    RoleGuard,
     provideClientHydration()
   ],
   bootstrap: [AppComponent]
