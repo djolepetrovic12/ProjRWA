@@ -17,6 +17,7 @@
   align-items: center; /* Center content inside buttons */
   justify-content: center; /* Center content horizontally */
   height: 40px; /* Set a consistent height for all buttons */
+  margin: 0px 5px;
 }
 
 mat-icon-button {
@@ -25,4 +26,9 @@ mat-icon-button {
   justify-content: center; /* Center the icon horizontally */
   height: 40px; /* Match height with flat buttons */
   width: 40px; /* Make it a square button */
+}
+
+.logout 
+{
+  margin-right:-10px;
 }

@@ -1,10 +1,17 @@
-<div>
-    <span>
-    <mat-form-field class="example-full-width">
-        <mat-label>Search Professors</mat-label>
-        <input matInput [formControl]="searchProfsControl"
+<div class="search-container">
+    <input 
+      [formControl]="searchControl" 
+      placeholder="Search resources..." 
+      class="search-bar"
+      type="text"
+    />
+</div>
+
+<div class="search-container">
+        <input matInput 
+        [formControl]="searchProfsControl"
         placeholder="Search professors..." 
-        class="search-input"
+        class="search-bar little-search-bar"
         [matAutocomplete]="auto"
         >
         <mat-autocomplete #auto="matAutocomplete" (optionSelected)="onOptionSelected($event)" >
@@ -12,26 +19,20 @@
             {{ suggestion.name }} {{suggestion.surname}}
             </mat-option>
         </mat-autocomplete>
-    </mat-form-field>
-</span>
+
+<div>
 <span>selected professors: </span> 
 <span *ngFor="let prof of selectedProfessors$ | async">
     <span><mat-chip (click)="removeUser(prof)"> {{prof.name}} {{prof.surname}} </mat-chip></span> 
 </span>
 </div>
-
-
-<div class="search-container">
-    <input 
-      [formControl]="searchControl" 
-      placeholder="Search resources..." 
-      class="search-input"
-    />
 </div>
+
+
 
 
 ======================================================================================
 
-<div *ngFor="let studyResource of studyResourcesList$ | async">
+<div class="flashcards-flexbox" *ngFor="let studyResource of studyResourcesList$ | async">
 <app-study-resource [studyResourceInfo]="studyResource" ></app-study-resource>
 </div>
