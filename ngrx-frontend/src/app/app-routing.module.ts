@@ -9,14 +9,16 @@ import { FlashcardsPageComponent } from './components/flashcards/flashcards-page
 import { StudyResourcesPageComponent } from './components/studyResource/study-resources-page/study-resources-page.component';
 import { MyStudyResourcesPageComponent } from './components/studyResource/my-study-resources-page/my-study-resources-page.component';
 import { RoleGuard } from './guards/roles.guard';
+import { RoleRedirectGuard } from './guards/role-redirect.guard';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 
 const routes: Routes = [
 
   {
     path:'',
     component:HomeComponent,
-    canActivate: [RoleGuard],
+    canActivate: [RoleGuard, RoleRedirectGuard],
     data: {
       expectedRoles: ['ADMIN', 'PROFESSOR', 'STUDENT']
     }
@@ -30,8 +32,12 @@ const routes: Routes = [
     component:RegisterComponent
   },
   {
-    path:'mainpage', 
-    component:MainpageComponent
+    path:'admin-dashboard', 
+    component:AdminDashboardComponent,
+    canActivate: [RoleGuard],
+    data: {
+      expectedRoles: ['ADMIN', 'PROFESSOR', 'STUDENT']
+    }
   },
   {
     path:'flashcards',

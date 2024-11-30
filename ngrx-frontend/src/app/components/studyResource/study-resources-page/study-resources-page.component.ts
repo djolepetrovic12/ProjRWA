@@ -35,6 +35,7 @@ export class StudyResourcesPageComponent implements OnInit{
     private store:Store<AppState>,
     private matDialogRef: MatDialog
   ){
+    this.store.dispatch(LoadStudyResources());
     this.studyResourcesList$ = this.store.select(SelectStudyResourcesFeature);
 
     /*this.searchControl.valueChanges

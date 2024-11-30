@@ -1,6 +1,6 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AppState } from "../../app.state";
-import { UserState } from "../reducers/user.reducer";
+import { adapter, UserState } from "../reducers/user.reducer";
 
 export const selectUserState = createFeatureSelector<AppState, UserState>('user');
 
@@ -29,11 +29,9 @@ export const SelectAuthFeature = createSelector
     (state) => state.isAuthenticated
 );
 
+const { selectAll } = adapter.getSelectors();
 
-/*export const SelectWhoAmI = createSelector
-{
-    SelectUserFeature,
-    (state: UserState) => state.Iam
-    
-}*/
-
+export const SelectAllUsersFeature = createSelector(
+  selectUserState,
+  selectAll
+);

@@ -11,6 +11,10 @@ export const DownloadStudyResources = createAction('Download study resources',pr
 export const DownloadStudyResourcesSuccess = createAction('Download study resources success',props<{ resourceID: number; fileBlob: Blob, fileName: string }>());
 export const DownloadStudyResourcesFailure = createAction('Download study resources failure',props<{error:any}>());
 
+export const DownloadMyStudyResources = createAction('Download my study resources',props<{resourceID:number}>());
+export const DownloadMyStudyResourcesSuccess = createAction('Download my study resources success',props<{ resourceID: number; fileBlob: Blob, fileName: string }>());
+export const DownloadMyStudyResourcesFailure = createAction('Download my study resources failure',props<{error:any}>());
+
 export const SearchItems = createAction('Search Items', props<{ query: string, professorIDs:number[] }>());
 export const SearchItemsSuccess = createAction('Search Items Success', props<{ studyResources: StudyResource[] }>());
 export const SearchItemsFailure = createAction('Search Items Failure', props<{ error: any }>());

@@ -2,6 +2,8 @@ import { createReducer, on } from "@ngrx/store";
 import { Flashcard } from "../../models/flashcard";
 import * as FlashcardActions from "../actions/flashcard.actions"
 import { createEntityAdapter, EntityAdapter, EntityState } from '@ngrx/entity';
+import * as UserActions from "../actions/user.action"
+
 
 
 export interface FlashcardState extends EntityState<Flashcard>
@@ -33,6 +35,7 @@ export const FlashcardReducer = createReducer(
     on(FlashcardActions.UpdateAFlashcardFailure, (state, { error }) => ({
         ...state,
         error
-    })),      
+    })),    
+    on(UserActions.LogoutSuccess, () => FlashcardInitialState)  
     )
 

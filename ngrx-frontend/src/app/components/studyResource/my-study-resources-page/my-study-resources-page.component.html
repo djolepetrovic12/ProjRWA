@@ -1,4 +1,4 @@
-
+<div class="componentDiv">
 <div>
     <p>have a resource you want to upload?</p>
     <button mat-flat-button (click)="openDialog()">
@@ -8,4 +8,5 @@
 
 <div *ngFor="let studyResource of studyResourcesList$ | async">
     <app-study-resource [studyResourceInfo]="studyResource" [myResources]="true"> </app-study-resource>
+</div>
 </div>

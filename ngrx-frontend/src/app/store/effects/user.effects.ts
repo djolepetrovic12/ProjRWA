@@ -2,9 +2,9 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from "@ngrx/store";
 import { AppState } from "../../app.state";
-import { Login, LoginFailure, LoginSuccess, Logout, LogoutFailed, LogoutSuccess, Register, RegisterFailure, RegisterSuccess, RehydrateAuth } from "../actions/user.action";
+import { DeleteUser, DeleteUserFailure, DeleteUserSuccess, LoadAllUsers, LoadAllUsersFailure, LoadAllUsersSuccess, Login, LoginFailure, LoginSuccess, Logout, LogoutFailed, LogoutSuccess, Register, RegisterFailure, RegisterSuccess, RehydrateAuth } from "../actions/user.action";
 import { UserService } from "../../services/User/user-service.service";
-import { catchError, map, of, switchMap } from "rxjs";
+import { catchError, map, of, switchMap, tap } from "rxjs";
 import { User } from "../../models/user";
 import { Router } from "@angular/router";
 import { CreateAFlashcard, CreateAFlashcardFailure, CreateAFlashcardSuccess, DeleteAFlashcard, DeleteAFlashcardFailure, DeleteAFlashcardSuccess, LoadFlashcards, LoadFlashcardsFailure, LoadFlashcardsSuccess, UpdateAFlashcard, UpdateAFlashcardFailure, UpdateAFlashcardSuccess } from "../actions/flashcard.actions";
@@ -17,6 +17,9 @@ import {
   DeleteMyStudyResource, 
   DeleteMyStudyResourceFailure, 
   DeleteMyStudyResourceSuccess, 
+  DownloadMyStudyResources, 
+  DownloadMyStudyResourcesFailure, 
+  DownloadMyStudyResourcesSuccess, 
   DownloadStudyResources, 
   DownloadStudyResourcesFailure, 
   DownloadStudyResourcesSuccess, 
@@ -84,6 +87,11 @@ export class UserEffects {
   logout$ = createEffect(() => 
     this.actions$.pipe(
       ofType(Logout),
+      tap(() => {
+        if (typeof window !== 'undefined' && window.sessionStorage) {
+          sessionStorage.clear();
+        }
+      }),
       switchMap(() =>
         this.userService.logout().pipe(
           map((response:any) => { 
@@ -93,7 +101,6 @@ export class UserEffects {
             } else {
               console.log("usao sam fail");
               throw new Error('Logout failed');
-              
             }
           
           } ),
@@ -114,6 +121,30 @@ export class UserEffects {
       )
     )
   );
+
+  loadAllUsers$ = createEffect(() => 
+    this.actions$.pipe(
+      ofType(LoadAllUsers),
+      switchMap(({userID}) => 
+        this.userService.getAllUsers(userID).pipe(
+          map((response) =>  LoadAllUsersSuccess({users:<User[]>response}) ),
+          catchError((error) => of(LoadAllUsersFailure({ error:error })))
+        )
+      )
+      )
+    )
+
+    deleteUser$ = createEffect(() => 
+      this.actions$.pipe(
+        ofType(DeleteUser),
+        switchMap(({id}) => 
+          this.userService.deleteUser(id).pipe(
+            map((response) =>  DeleteUserSuccess({id: <number>response}) ),
+            catchError((error) => of(DeleteUserFailure({ error:error })))
+          )
+        )
+        )
+      )
 
   createAFlashcard$ = createEffect(() => 
     this.actions$.pipe(
@@ -250,6 +281,22 @@ export class UserEffects {
                         )
                         )
                       )
+
+                      downloadMyStudyResource$ = createEffect(() => 
+                        this.actions$.pipe(
+                          ofType(DownloadMyStudyResources),
+                          switchMap(({resourceID}) => 
+                            this.studyResourceService.downloadMyStudyResource(resourceID).pipe(
+                              map((response: HttpResponse<Blob>) =>{
+                                const contentDisposition = response.headers.get('Content-Disposition');
+                                console.log(contentDisposition);
+                                const fileName = contentDisposition?.split('filename=')[1]?.replace(/"/g, '') || 'downloaded-file.pdf';
+                                return DownloadMyStudyResourcesSuccess({resourceID,fileBlob:response.body!,fileName})}),
+                              catchError((error) => of(DownloadMyStudyResourcesFailure({ error:error })))
+                            )
+                          )
+                          )
+                        )
 
 
                       searchItems$ = createEffect(() => 

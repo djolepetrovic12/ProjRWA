@@ -5,7 +5,7 @@ import { AppState } from '../../../app.state';
 import { Observable, take } from 'rxjs';
 import { SelectUserIDFeature } from '../../../store/selectors/user.selector';
 import { CreateAComment } from '../../../store/actions/comment.actions';
-import { DownloadStudyResources } from '../../../store/actions/studyResource.actions';
+import { DownloadMyStudyResources, DownloadStudyResources } from '../../../store/actions/studyResource.actions';
 
 @Component({
   selector: 'app-study-resource-dialog',
@@ -60,9 +60,15 @@ export class StudyResourceDialogComponent implements OnInit {
 
   download()
   {
-    //console.log(this.data.id);
-    this.store.dispatch(DownloadStudyResources({resourceID: this.data.id}))
-    //this.matDialogRef.closeAll();
+        this.userID$.pipe(take(1)).subscribe((userID) => {
+      if (userID === this.data.userID) {
+        this.store.dispatch(DownloadMyStudyResources({resourceID: this.data.id}));
+      }
+      else
+      {
+        this.store.dispatch(DownloadStudyResources({resourceID: this.data.id}))
+      }
+    });
   }
 
   get getDateUploaded() : string

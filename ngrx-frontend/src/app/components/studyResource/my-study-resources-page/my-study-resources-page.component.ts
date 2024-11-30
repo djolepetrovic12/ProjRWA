@@ -23,20 +23,22 @@ export class MyStudyResourcesPageComponent implements OnInit {
   constructor(
     private store:Store<AppState>,
     private matDialogRef:MatDialog
-  ){}
-  
-  ngOnInit(): void {
+  )
+  {
 
     this.UserID$ = this.store.select(SelectUserIDFeature);
 
     this.UserID$.pipe(take(1)).subscribe((userID) => {
       if (userID) {
         this.store.dispatch(LoadMyStudyResources({id:userID}));
+        this.studyResourcesList$ = this.store.select(SelectMyStudyResourcesFeature);
       }
   })
-
-  this.studyResourcesList$ = this.store.select(SelectMyStudyResourcesFeature);
     
+    //this.studyResourcesList$ = this.store.select(SelectMyStudyResourcesFeature);
+  }
+  
+  ngOnInit(): void {
   }
 
   openDialog(){

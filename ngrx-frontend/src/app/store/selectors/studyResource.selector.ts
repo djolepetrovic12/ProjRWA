@@ -1,18 +1,28 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { AppState } from "../../app.state";
-import { StudyResourceState } from "../reducers/studyResource.reducer";
+import { myStudyResourceAdapter, MyStudyResourceState, studyResourceAdapter, StudyResourceState } from "../reducers/studyResource.reducer";
+
 
 
 export const selectStudyResourcesState = createFeatureSelector<AppState, StudyResourceState>('studyResources');
+export const selectMyStudyResourcesState = createFeatureSelector<AppState, MyStudyResourceState>('myStudyResources');
+
+const {
+    selectAll: selectAllStudyResources,
+  } = studyResourceAdapter.getSelectors();
+  
+  const {
+    selectAll: selectAllMyStudyResources,
+  } = myStudyResourceAdapter.getSelectors();
 
 export const SelectStudyResourcesFeature = createSelector
 (
     selectStudyResourcesState,
-    (state) => state.list
+    selectAllStudyResources
 );
 
 export const SelectMyStudyResourcesFeature = createSelector
 (
-    selectStudyResourcesState,
-    (state) => state.myList
+    selectMyStudyResourcesState,
+    selectAllMyStudyResources
 );

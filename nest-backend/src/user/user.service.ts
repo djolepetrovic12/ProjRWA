@@ -3,10 +3,12 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from './entities/user.entity';
-import { DataSource, Like, Repository } from 'typeorm';
+import { DataSource, Like, Not, Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
+
+
 
   constructor(@InjectRepository(User) private readonly userRepository : Repository<User>,){}
 
@@ -22,22 +24,17 @@ export class UserService {
     return this.userRepository.findOne({where: {email}});
   }
 
-  
-
-
-  findAll() {
-    return `This action returns all user`;
+  getAllUsers(id: number) {
+    return this.userRepository.find({where:{ id:Not(id) }});
   }
 
   findOne(id: any) {
     return this.userRepository.findOne({where:{id}});
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  async deleteUser(id: number) {
+    await this.userRepository.delete(id);
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+    return id;
   }
 }

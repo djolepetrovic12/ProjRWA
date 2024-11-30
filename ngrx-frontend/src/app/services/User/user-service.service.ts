@@ -30,6 +30,17 @@ export class UserService {
     return this.httpClient.post("http://localhost:3000/user/register", formData);
     //.subscribe(() => this.router.navigate(['/login']));
   }
+
+  getAllUsers(userID:number)
+  {
+    return this.httpClient.get(this.userURL + 'getAllUsers/' + userID,{withCredentials:true});
+  }
+
+  deleteUser(id:number)
+  {
+    return this.httpClient.delete(this.userURL + 'deleteUser/' + id,{withCredentials:true});
+  }
+
 }
 
 

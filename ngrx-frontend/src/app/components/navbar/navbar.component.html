@@ -13,6 +13,9 @@
     <span *ngIf="(userRole$ | async ) === 'PROFESSOR' || (userRole$ | async ) === 'STUDENT' || (userRole$ | async ) === 'ADMIN' ">
       <a mat-flat-button class="buttons" routerLink="/studyResources" color="accent">resources</a>
     </span>
+    <span *ngIf="(userRole$ | async ) === 'PROFESSOR' || (userRole$ | async ) === 'STUDENT' || (userRole$ | async ) === 'ADMIN' ">
+      <a mat-flat-button class="buttons" routerLink="/admin-dashboard" color="accent">admin dashboard</a>
+    </span>
     <span *ngIf="(userRole$ | async ) === 'PROFESSOR'">
       <a mat-flat-button class="buttons" routerLink="/myStudyResources" color="accent">my resources</a>
     </span>

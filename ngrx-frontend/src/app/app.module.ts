@@ -31,7 +31,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { FlashcardReducer } from './store/reducers/flashcard.reducer';
 import { UpdateFlashcardDialogComponent } from './components/flashcards/update-flashcard-dialog/update-flashcard-dialog.component';
 import { MatChipsModule } from '@angular/material/chips';
-import { StudyResourceReducer } from './store/reducers/studyResource.reducer';
+import { MyStudyResourceReducer, StudyResourceReducer } from './store/reducers/studyResource.reducer';
 import { StudyResourcesPageComponent } from './components/studyResource/study-resources-page/study-resources-page.component';
 import { CreateAStudyResourceDialogComponent } from './components/studyResource/create-astudy-resource-dialog/create-astudy-resource-dialog.component';
 import { StudyResourceComponent } from './components/studyResource/study-resource/study-resource.component';
@@ -45,6 +45,11 @@ import { CommentCardComponent } from './components/studyResource/comment-card/co
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RoleGuard } from '../app/guards/roles.guard';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { RoleRedirectGuard } from './guards/role-redirect.guard';
+import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+
 
 @NgModule({
   declarations: [
@@ -68,6 +73,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     CreateStudyResourceDialogComponent,
     CommentCardComponent,
     UnauthorizedComponent,
+    AdminDashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +94,9 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
     MatTableModule,
     MatTable,
     MatAutocompleteModule,
-    StoreModule.forRoot<AppState>({ user: UserReducer, flashcards:FlashcardReducer, studyResources:StudyResourceReducer}),
+    MatPaginatorModule,
+    MatSortModule,
+    StoreModule.forRoot<AppState>({ user: UserReducer, flashcards:FlashcardReducer, studyResources:StudyResourceReducer, myStudyResources:MyStudyResourceReducer}),
     EffectsModule.forRoot([UserEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25, // Retains last 25 states in DevTools
@@ -98,6 +106,7 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
   ],
   providers: [
     RoleGuard,
+    RoleRedirectGuard,
     provideClientHydration()
   ],
   bootstrap: [AppComponent]

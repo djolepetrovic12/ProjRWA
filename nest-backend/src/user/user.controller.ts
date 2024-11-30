@@ -102,30 +102,22 @@ export class UserController {
 
 
 
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @SetMetadata('roles',[Roles.Admin])
-  @Get()
-  findAll() {
-    return this.userService.findAll();
-  }
-
-
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.userService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.userService.update(+id, updateUserDto);
+
+  @Get('getAllUsers/:userID')
+  getAllUsers(@Param('userID') id: number) {
+    return this.userService.getAllUsers(id);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.userService.remove(+id);
+  
+
+  @Delete('deleteUser/:id')
+  async deleteUser(@Param('id') id: number) {
+    return await this.userService.deleteUser(id);
   }
-
-
-
 
 }
