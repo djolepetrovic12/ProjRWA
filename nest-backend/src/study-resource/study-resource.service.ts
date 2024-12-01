@@ -75,7 +75,7 @@ export class StudyResourceService {
       throw new NotFoundException('File not found');
     }*/
 
-    return studyResource.resourceLink;
+    return [studyResource.resourceLink, studyResource.userID];
     
   }
 

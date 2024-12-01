@@ -25,7 +25,7 @@ export class StudyResource {
     @OneToMany( () =>Comment, (comments)=> comments.studyResource)
     comments:Comment[];
 
-    @ManyToOne(()=>User, (user)=> user.studyResources)
+    @ManyToOne(()=>User, (user)=> user.studyResources, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'user_id'})
     user:User;
 

@@ -21,7 +21,7 @@ export class StudyResourceController {
       storage: diskStorage({
         destination: (req, file, cb) => {
           // Create a unique folder for each user based on their userId
-          const basePath = path.join(__dirname, '..', '/uploads');
+          const basePath = path.resolve(process.cwd(), 'uploads');
 
           const userFolder = path.join(basePath, String( `user_` + req.params.userid));
 
@@ -51,16 +51,18 @@ export class StudyResourceController {
     }),
   )
   create(@Param('userid') userid:string, @UploadedFile() file: Express.Multer.File ,@Body() createStudyResourceDto: CreateStudyResourceDto) {
-    const filePath = `user_${userid}/${file.filename}`;
+    const filePath = `${file.filename}`;
     createStudyResourceDto.resourceLink = filePath;
     return this.studyResourceService.create(+userid,createStudyResourceDto);
   }
 
   @Get('downloadMyStudyResource/:resourceID')
   async downloadMyStudyResource(@Param('resourceID') resourceID:number,@Res() res: Response){
-    const relFilePath= await this.studyResourceService.findMyStudyResource(resourceID);
+    const [ResLink,Uid]= await this.studyResourceService.findMyStudyResource(resourceID);
+
+    const relFilePath = `user_${Uid}/${ResLink}`
     
-    const absoluteFilePath = path.resolve(__dirname, '..', 'uploads', relFilePath);
+    const absoluteFilePath = path.resolve(process.cwd(),'uploads', relFilePath);
 
   Logger.log(`Absolute file path: ${absoluteFilePath}`);
 
@@ -101,9 +103,11 @@ export class StudyResourceController {
   @Delete('deleteMyStudyResource/:id')
   async remove(@Param('id') id: string) {
 
-  const relFilePath= await this.studyResourceService.findMyStudyResource(+id);
-    
-  const absoluteFilePath = path.resolve(__dirname, '..', 'uploads', relFilePath);
+  const [ResLink,Uid]= await this.studyResourceService.findMyStudyResource(+id);
+  
+  const relFilePath = `user_${Uid}/${ResLink}`
+
+  const absoluteFilePath = path.resolve(process.cwd(),'uploads', relFilePath);
 
   Logger.log(`Absolute file path: ${absoluteFilePath}`);
 

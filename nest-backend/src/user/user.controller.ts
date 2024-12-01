@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, Res, Req, UnauthorizedException, UseGuards, SetMetadata, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, BadRequestException, Res, Req, UnauthorizedException, UseGuards, SetMetadata, Query, Logger } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -11,6 +11,8 @@ import { ValidationPipe, NotFoundException } from '@nestjs/common';
 import { JwtAuthGuard } from 'src/auth-guard/jwt-auth-guard.guard';
 import { RolesGuard } from 'src/roles-guard/roles-guard.guard';
 import { Roles } from 'enums';
+import * as path from 'path';
+import * as fs from 'fs';
 
 @Controller('user')
 export class UserController {
@@ -117,6 +119,28 @@ export class UserController {
 
   @Delete('deleteUser/:id')
   async deleteUser(@Param('id') id: number) {
+
+    const folderName = `user_${id}`;
+    const absoluteFolderPath = path.resolve(process.cwd(),'uploads', folderName);
+
+    Logger.log(`Absolute folder path: ${absoluteFolderPath}`);
+
+    // Check if the folder exists
+    if (!fs.existsSync(absoluteFolderPath)) {
+      Logger.error('Folder not found:', absoluteFolderPath);
+      throw new NotFoundException('Folder not found');
+    }
+
+    try {
+      // Delete the folder and its contents
+      fs.rmSync(absoluteFolderPath, { recursive: true, force: true });
+      Logger.log(`Folder deleted successfully: ${absoluteFolderPath}`);
+    } catch (error) {
+      Logger.error('Could not delete the folder:', error);
+      throw new NotFoundException('Could not delete the folder');
+    }
+
+
     return await this.userService.deleteUser(id);
   }
 

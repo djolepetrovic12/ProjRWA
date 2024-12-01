@@ -20,11 +20,11 @@ export class Comment {
     @Column({name: 'studyResource_id'})
     studyResourceID:number;
 
-    @ManyToOne(()=> User, (user)=>user.comments)
+    @ManyToOne(()=> User, (user)=>user.comments, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'user_id'})
     user:User;
 
-    @ManyToOne(()=> StudyResource, (studyResource)=>studyResource.comments)
+    @ManyToOne(()=> StudyResource, (studyResource)=>studyResource.comments, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'studyResource_id'})
     studyResource:StudyResource;
     //studyResource

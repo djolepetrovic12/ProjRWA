@@ -22,7 +22,7 @@ export class Flashcard {
     userID: number;
 
     //user
-    @ManyToOne(()=> User, (user)=>user.flashcards)
+    @ManyToOne(()=> User, (user)=>user.flashcards, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'user_id'})
     user:User;
 

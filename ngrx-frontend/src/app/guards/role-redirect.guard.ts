@@ -18,7 +18,7 @@ export class RoleRedirectGuard implements CanActivate {
       take(1),
       map(role => {
         if (role === 'ADMIN') {
-          this.router.navigate(['/']);
+          this.router.navigate(['/studyResources']);
         } else if (role === 'PROFESSOR') {
           this.router.navigate(['/myStudyResources']);
         } else if (role === 'STUDENT') {
