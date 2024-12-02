@@ -41,6 +41,11 @@ export class UserService {
     return this.httpClient.delete(this.userURL + 'deleteUser/' + id,{withCredentials:true});
   }
 
+  updateUser(id:number, formData: any)
+  {
+    return this.httpClient.patch(this.userURL + 'updateUser/' + id,formData,{withCredentials:true});
+  }
+
 }
 
 

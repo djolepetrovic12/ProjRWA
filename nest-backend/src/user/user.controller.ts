@@ -144,4 +144,11 @@ export class UserController {
     return await this.userService.deleteUser(id);
   }
 
+  
+
+  @Patch('updateUser/:id')
+  updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+    return this.userService.updateUser(+id,updateUserDto);
+  }
+
 }

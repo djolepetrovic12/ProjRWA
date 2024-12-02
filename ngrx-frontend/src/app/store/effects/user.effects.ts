@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Store } from "@ngrx/store";
 import { AppState } from "../../app.state";
-import { DeleteUser, DeleteUserFailure, DeleteUserSuccess, LoadAllUsers, LoadAllUsersFailure, LoadAllUsersSuccess, Login, LoginFailure, LoginSuccess, Logout, LogoutFailed, LogoutSuccess, Register, RegisterFailure, RegisterSuccess, RehydrateAuth } from "../actions/user.action";
+import { DeleteUser, DeleteUserFailure, DeleteUserSuccess, LoadAllUsers, LoadAllUsersFailure, LoadAllUsersSuccess, Login, LoginFailure, LoginSuccess, Logout, LogoutFailed, LogoutSuccess, Register, RegisterFailure, RegisterSuccess, RehydrateAuth, UpdateUser, UpdateUserFailure, UpdateUserSuccess } from "../actions/user.action";
 import { UserService } from "../../services/User/user-service.service";
 import { catchError, map, of, switchMap, tap } from "rxjs";
 import { User } from "../../models/user";
@@ -65,7 +65,7 @@ export class UserEffects {
       ofType(RehydrateAuth),
       switchMap(() =>
         this.userService.getCurrentUser().pipe(
-          map(response => {this.router.navigate(['/']);return LoginSuccess({user:response})}),
+          map(response => {this.router.navigate(['/']);return LoginSuccess({user:<User>response})}),
           catchError((error) => of(LoginFailure({ error })))
         )
       )
@@ -145,6 +145,19 @@ export class UserEffects {
         )
         )
       )
+
+      updateUser$ = createEffect(() => 
+        this.actions$.pipe(
+          ofType(UpdateUser),
+          switchMap(({id,formData}) => 
+            this.userService.updateUser(id,formData).pipe(
+              map((response) =>  UpdateUserSuccess({user: <User>response})),
+              catchError((error) => of(UpdateUserFailure({ error:error })))
+            )
+          )
+          )
+        )
+
 
   createAFlashcard$ = createEffect(() => 
     this.actions$.pipe(

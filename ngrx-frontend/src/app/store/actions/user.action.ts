@@ -23,3 +23,7 @@ export const DeleteUser = createAction('Delete a user', props<{ id:number }>());
 export const DeleteUserSuccess = createAction('Delete Success', props<{ id:number }>());
 export const DeleteUserFailure = createAction('Delete Failure', props<{ error: string }>());
 
+export const UpdateUser = createAction('Update a user', props<{ id:number, formData:any }>());
+export const UpdateUserSuccess = createAction('Update Success', props<{ user: User }>());
+export const UpdateUserFailure = createAction('Update Failure', props<{ error: string }>());
+

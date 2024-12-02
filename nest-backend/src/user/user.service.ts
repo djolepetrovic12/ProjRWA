@@ -10,6 +10,7 @@ export class UserService {
 
 
 
+
   constructor(@InjectRepository(User) private readonly userRepository : Repository<User>,){}
 
 
@@ -24,8 +25,9 @@ export class UserService {
     return this.userRepository.findOne({where: {email}});
   }
 
-  getAllUsers(id: number) {
-    return this.userRepository.find({where:{ id:Not(id) }});
+  async getAllUsers(id: number): Promise<Omit<User, 'password'>[]> {
+    const users = this.userRepository.find({where:{ id:Not(id) }});
+    return (await users).map(({ password, ...userWithoutPassword }) => userWithoutPassword);
   }
 
   findOne(id: any) {
@@ -37,4 +39,13 @@ export class UserService {
 
     return id;
   }
+
+
+  async updateUser(id: number, UpdateUserDto: UpdateUserDto) {
+    await this.userRepository.update(id,UpdateUserDto);
+    return await this.userRepository.findOne({where:{id}});
+  
+  }
+
+
 }

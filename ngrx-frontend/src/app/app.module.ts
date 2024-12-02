@@ -49,6 +49,7 @@ import { RoleRedirectGuard } from './guards/role-redirect.guard';
 import { AdminDashboardComponent } from './components/admin-dashboard/admin-dashboard.component';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { UpdateUserDialogComponent } from './components/update-user-dialog/update-user-dialog.component';
 
 
 @NgModule({
@@ -74,6 +75,7 @@ import { MatSortModule } from '@angular/material/sort';
     CommentCardComponent,
     UnauthorizedComponent,
     AdminDashboardComponent,
+    UpdateUserDialogComponent,
   ],
   imports: [
     BrowserModule,

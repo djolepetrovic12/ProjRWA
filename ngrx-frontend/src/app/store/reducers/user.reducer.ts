@@ -56,6 +56,12 @@ export const UserReducer = createReducer(
     on(UserActions.DeleteUserFailure, (state, { error }) => ({
         ...state,
         error,
-    })),      
+    })),
+    on(UserActions.UpdateUserSuccess, (state, { user }) => (
+      adapter.updateOne(
+        { id: user.id, changes: user },
+        state
+      )
+    ))   
       
 )

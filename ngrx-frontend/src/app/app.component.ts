@@ -51,7 +51,7 @@ export class AppComponent implements OnInit{
             filter((event) => event instanceof NavigationEnd) // Track only NavigationEnd events
           )
           .subscribe((event: NavigationEnd) => {
-            if (event.urlAfterRedirects !== '/login') {
+            if (event.urlAfterRedirects !== '/login' && event.urlAfterRedirects !== '/register') {
               // Only save the route if it's not the login page
               this.setSessionStorageItem('lastVisitedPage', event.urlAfterRedirects);
             }

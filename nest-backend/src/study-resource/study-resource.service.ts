@@ -36,8 +36,8 @@ export class StudyResourceService {
     return SR;
   }
 
-  findAll() {
-    return this.studyResourceRepository.find({relations:['user','comments','comments.user']});
+  async findAll() {
+    const studyRes = await this.studyResourceRepository.find({relations:['user','comments','comments.user']});
   }
 
   findAllForUser(id:number) {

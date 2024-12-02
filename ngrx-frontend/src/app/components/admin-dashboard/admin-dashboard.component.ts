@@ -7,7 +7,9 @@ import { Observable, take } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
 import { SelectAllUsersFeature, SelectUserIDFeature, SelectUserRoleFeature } from '../../store/selectors/user.selector';
-import { DeleteUser, LoadAllUsers } from '../../store/actions/user.action';
+import { DeleteUser, LoadAllUsers, UpdateUser } from '../../store/actions/user.action';
+import { MatDialog } from '@angular/material/dialog';
+import { UpdateUserDialogComponent } from '../update-user-dialog/update-user-dialog.component';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -25,7 +27,7 @@ export class AdminDashboardComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private store:Store<AppState>)
+  constructor(private store:Store<AppState>,private matDialogRef:MatDialog)
   {
     this.UserID$ = this.store.select(SelectUserIDFeature);
 
@@ -49,7 +51,15 @@ export class AdminDashboardComponent implements OnInit {
 
   // Example action methods
   edit(user: User): void {
-    //console.log('Editing user:', user);
+    this.userRole$.pipe(take(1)).subscribe((role) => {
+      if (role === 'ADMIN') {
+        this.matDialogRef.open(UpdateUserDialogComponent,{data: user});
+      }
+      else
+      {
+        alert('You do not have the admin permissions necessary to delete accounts');
+      }
+    });
   }
 
   delete(user: User): void {
