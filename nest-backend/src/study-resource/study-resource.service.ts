@@ -37,15 +37,11 @@ export class StudyResourceService {
   }
 
   async findAll() {
-    const studyRes = await this.studyResourceRepository.find({relations:['user','comments','comments.user']});
+    return await this.studyResourceRepository.find({relations:['user','comments','comments.user']});
   }
 
   findAllForUser(id:number) {
     return this.studyResourceRepository.find({where:{userID:id},relations:['user','comments','comments.user']});
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} studyResource`;
   }
 
   async update(id: number, updateStudyResourceDto: UpdateStudyResourceDto) {
@@ -69,12 +65,6 @@ export class StudyResourceService {
 
 
     const absoluteFilePath = path.resolve(__dirname, '..', 'uploads', studyResource.resourceLink);
-    /*if(!fs.existsSync(absoluteFilePath))
-    {
-      console.log('nema fajla')
-      throw new NotFoundException('File not found');
-    }*/
-
     return [studyResource.resourceLink, studyResource.userID];
     
   }

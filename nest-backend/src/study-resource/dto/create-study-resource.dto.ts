@@ -12,14 +12,9 @@ export class CreateStudyResourceDto
     @IsNotEmpty()
     description:string;
 
-    //@IsDateString()
-    //dateUploaded:Date;
-
     @IsString()
     @MinLength(1)
     resourceLink?:string;
 
-    //@IsNumber()
-    //userID: number;
 
 }

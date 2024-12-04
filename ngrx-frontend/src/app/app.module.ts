@@ -37,10 +37,8 @@ import { CreateAStudyResourceDialogComponent } from './components/studyResource/
 import { StudyResourceComponent } from './components/studyResource/study-resource/study-resource.component';
 import { StudyResourceDialogComponent } from './components/studyResource/study-resource-dialog/study-resource-dialog.component';
 import { MyStudyResourcesPageComponent } from './components/studyResource/my-study-resources-page/my-study-resources-page.component';
-import { MyStudyResourceTableComponent } from './components/studyResource/my-study-resource-table/my-study-resource-table.component';
 import {MatTable, MatTableModule} from '@angular/material/table';
 import { UpdateStudyResourceDialogComponent } from './components/studyResource/update-study-resource-dialog/update-study-resource-dialog.component';
-import { CreateStudyResourceDialogComponent } from './components/studyResource/create-study-resource-dialog/create-study-resource-dialog.component';
 import { CommentCardComponent } from './components/studyResource/comment-card/comment-card.component';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { RoleGuard } from '../app/guards/roles.guard';
@@ -69,9 +67,7 @@ import { UpdateUserDialogComponent } from './components/update-user-dialog/updat
     StudyResourceComponent,
     StudyResourceDialogComponent,
     MyStudyResourcesPageComponent,
-    MyStudyResourceTableComponent,
     UpdateStudyResourceDialogComponent,
-    CreateStudyResourceDialogComponent,
     CommentCardComponent,
     UnauthorizedComponent,
     AdminDashboardComponent,
@@ -101,8 +97,8 @@ import { UpdateUserDialogComponent } from './components/update-user-dialog/updat
     StoreModule.forRoot<AppState>({ user: UserReducer, flashcards:FlashcardReducer, studyResources:StudyResourceReducer, myStudyResources:MyStudyResourceReducer}),
     EffectsModule.forRoot([UserEffects]),
     StoreDevtoolsModule.instrument({
-      maxAge: 25, // Retains last 25 states in DevTools
-      logOnly: true, // Restrict DevTools to log-only mode in production
+      maxAge: 25,
+      logOnly: true,
     }),
 
   ],

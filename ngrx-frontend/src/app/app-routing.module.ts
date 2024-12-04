@@ -36,7 +36,7 @@ const routes: Routes = [
     component:AdminDashboardComponent,
     canActivate: [RoleGuard],
     data: {
-      expectedRoles: ['ADMIN', 'PROFESSOR', 'STUDENT']
+      expectedRoles: ['ADMIN']
     }
   },
   {

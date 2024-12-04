@@ -6,14 +6,11 @@
 <div class="table-container">
     <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z3">
   
-      <!-- Define Columns -->
-      <!-- Example: Name Column -->
       <ng-container matColumnDef="name">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
         <td mat-cell *matCellDef="let element">{{ element.name }}</td>
       </ng-container>
-  
-      <!-- Example: Age Column -->
+
       <ng-container matColumnDef="surname">
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Surname</th>
         <td mat-cell *matCellDef="let element">{{ element.surname }}</td>
@@ -33,8 +30,7 @@
         <th mat-header-cell *matHeaderCellDef mat-sort-header>Email</th>
         <td mat-cell *matCellDef="let element">{{ element.email }}</td>
       </ng-container>
-  
-      <!-- Example: Action Column -->
+
       <ng-container matColumnDef="actions">
         <th mat-header-cell *matHeaderCellDef></th>
         <td mat-cell *matCellDef="let element">
@@ -43,13 +39,11 @@
         </td>
       </ng-container>
   
-      <!-- Header and Row -->
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
       <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   
     </table>
   
-    <!-- Paginator -->
     <mat-paginator [pageSize]="5" [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
   </div>
 

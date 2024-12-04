@@ -13,19 +13,10 @@ export class FlashcardController {
     return await this.flashcardService.create(+id,createFlashcardDto);
   }
 
-  @Get()
-  findAll() {
-    return this.flashcardService.findAll();
-  }
 
   @Get('findAllForUser/:id')
   findAllForUser(@Param('id') id:number) {
     return this.flashcardService.findAllForUser(id);
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.flashcardService.findOne(+id);
   }
 
   @Patch('updateAFlashcard/:id')

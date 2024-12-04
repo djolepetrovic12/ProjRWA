@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { map, take } from 'rxjs/operators';
 import { SelectUserFeature, SelectUserRoleFeature } from '../store/selectors/user.selector';
 import { AppState } from '../app.state';
-//import { selectUserRole } from '../store/selectors/auth.selectors'; // Adjust selector path
 
 @Injectable({
   providedIn: 'root'
@@ -24,9 +23,9 @@ export class RoleRedirectGuard implements CanActivate {
         } else if (role === 'STUDENT') {
           this.router.navigate(['/flashcards']);
         } else {
-          this.router.navigate(['/login']); // Fallback or unauthorized route
+          this.router.navigate(['/login']);
         }
-        return false; // Prevent navigation to the route being guarded
+        return false;
       })
     );
   }

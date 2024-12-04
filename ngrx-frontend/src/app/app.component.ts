@@ -32,9 +32,9 @@ export class AppComponent implements OnInit{
       {
         const lastVisitedPage = this.getSessionStorageItem('lastVisitedPage');
         if (lastVisitedPage) {
-          this.router.navigateByUrl(lastVisitedPage); // Navigate to last visited page
+          this.router.navigateByUrl(lastVisitedPage);
         } else {
-          this.router.navigate(['/']); // Default to home page
+          this.router.navigate(['/']);
         }
       }
       else
@@ -48,11 +48,10 @@ export class AppComponent implements OnInit{
       if (auth) {
         this.router.events
           .pipe(
-            filter((event) => event instanceof NavigationEnd) // Track only NavigationEnd events
+            filter((event) => event instanceof NavigationEnd)
           )
           .subscribe((event: NavigationEnd) => {
             if (event.urlAfterRedirects !== '/login' && event.urlAfterRedirects !== '/register') {
-              // Only save the route if it's not the login page
               this.setSessionStorageItem('lastVisitedPage', event.urlAfterRedirects);
             }
           });
@@ -67,7 +66,6 @@ export class AppComponent implements OnInit{
     return null;
   }
 
-  // Safely set a sessionStorage item
   private setSessionStorageItem(key: string, value: string): void {
     if (typeof window !== 'undefined' && window.sessionStorage) {
       sessionStorage.setItem(key, value);

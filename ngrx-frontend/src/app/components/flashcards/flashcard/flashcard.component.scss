@@ -7,26 +7,22 @@
     transition: box-shadow 0.3s ease;
   }
   
-  /* Hover effect to make the card pop a bit */
   .example-card:hover {
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
   }
   
-  /* Text styling */
   mat-card-content p {
     font-size: 16px;
     color: #333;
     margin: 8px 0;
   }
   
-  /* Button container styling */
   mat-card-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
   }
-  
-  /* Button styling */
+
   button {
     text-transform: uppercase;
     font-weight: 500;
@@ -35,7 +31,6 @@
     border-radius: 4px;
   }
   
-  /* Primary button (Edit) */
   button[color="primary"] {
     background-color: #19d25a;
     color: white;
@@ -45,7 +40,6 @@
     background-color: #1565c0;
   }
   
-  /* Warn button (Delete) */
   button[color="warn"] {
     background-color: #d32f2f;
     color: white;
@@ -62,7 +56,6 @@
     margin-bottom: 4px;
   }
   
-  /* Style for the second paragraph: Times New Roman, slightly larger size */
   mat-card-content p:nth-of-type(2) {
     font-family: 'Times New Roman', Times, serif;
     font-size: 16px;
@@ -70,40 +63,33 @@
   }
 
   ::ng-deep .default-chip {
-    background-color: #1e90ff; /* Default blue */
+    background-color: #1e90ff;
   }
   
-  /* Dark */
   ::ng-deep .dark-chip {
-    background-color: #333; /* Dark gray */
+    background-color: #333;
   }
   
-  /* Red */
   ::ng-deep .red-chip {
-    background-color: #f44336; /* Material red */
+    background-color: #f44336;
   }
   
-  /* Green */
   ::ng-deep .green-chip {
-    background-color: #4caf50; /* Material green */
+    background-color: #4caf50;
   }
   
-  /* Yellow */
   .yellow-chip {
-    background-color: #ffc107; /* Material yellow */
+    background-color: #ffc107;
   }
   
-  /* Indigo */
   .indigo-chip {
-    background-color: #3f51b5; /* Material indigo */
+    background-color: #3f51b5;
   }
   
-  /* Purple */
   .purple-chip {
-    background-color: #9c27b0; /* Material purple */
+    background-color: #9c27b0;
   }
   
-  /* Pink */
   ::ng-deep .pink-chip {
-    background-color: #e91e63; /* Material pink */
+    background-color: #e91e63;
   }

@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { error } from 'console';
 import { AppState } from '../../app.state';
 import { Login } from '../../store/actions/user.action';
 import { Observable } from 'rxjs';
@@ -41,15 +39,6 @@ export class LoginComponent implements OnInit {
       this.store.dispatch(Login({ formData: this.form.getRawValue() }));
     }
   }
-  
-  /*this.httpClient.post("http://localhost:3000/user/login", this.form.getRawValue(),{withCredentials:true})
-  .subscribe(
-    (response) => {this.router.navigate(['/']);},
-    (error) => {
-      const errorMessage = error.error?.message || 'An unknown error occurred';
-      console.log(errorMessage);
-    }
-  );
-  */
+
 
 }

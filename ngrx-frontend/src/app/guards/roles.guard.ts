@@ -17,17 +17,15 @@ export class RoleGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> {
     const expectedRoles = route.data['expectedRoles'];
-    console.log(expectedRoles) // Role passed in route data
     return this.store.pipe(
-      select(SelectUserFeature), // Get the current user from the store
-      take(1), // Take only one emission of the current user
+      select(SelectUserFeature),
+      take(1),
       map((currentUser) => {
         if (currentUser && expectedRoles.includes(currentUser.role)) {
-          console.log(`${currentUser.role} --- ${expectedRoles}`)
-          return true; // Allow access if the user's role matches the expected role
+          return true;
         } else {
-          this.router.navigate(['/unauthorized']); // Redirect to login if unauthorized
-          return false; // Deny access if the roles don't match
+          this.router.navigate(['/unauthorized']);
+          return false;
         }
       })
     );

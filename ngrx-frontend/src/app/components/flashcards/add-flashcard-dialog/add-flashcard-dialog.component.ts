@@ -38,7 +38,6 @@ export class AddFlashcardDialogComponent implements OnInit {
   submit(){
       if (this.form.valid) {
         this.userID$.pipe(take(1)).subscribe((userID) => {
-          console.log(userID);
           if (userID) {
             this.store.dispatch(CreateAFlashcard({ id:userID, formData:this.form.getRawValue() }));
           }

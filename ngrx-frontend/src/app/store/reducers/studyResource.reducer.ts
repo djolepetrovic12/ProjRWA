@@ -77,17 +77,16 @@ export const StudyResourceReducer = createReducer(
       error,
     })),
     on(StudyResourceActions.DownloadStudyResourcesSuccess, (state, { fileBlob, fileName }) => {
-        // Download file immediately when success action is dispatched
         if (fileBlob) {
           const blobURL = window.URL.createObjectURL(fileBlob);
           const link = document.createElement('a');
           link.href = blobURL;
-          link.download = fileName; // You can make this dynamic
+          link.download = fileName;
           link.click();
-          window.URL.revokeObjectURL(blobURL); // Clean up
+          window.URL.revokeObjectURL(blobURL);
         }
     
-        return { ...state, fileBlob }; // Update state if necessary
+        return { ...state, fileBlob };
       }),
       on(UserActions.LogoutSuccess, () => initialStudyResourceState)
   );
@@ -145,89 +144,17 @@ export const StudyResourceReducer = createReducer(
       error,
     })),
     on(StudyResourceActions.DownloadMyStudyResourcesSuccess, (state, { fileBlob, fileName }) => {
-        // Download file immediately when success action is dispatched
         if (fileBlob) {
           const blobURL = window.URL.createObjectURL(fileBlob);
           const link = document.createElement('a');
           link.href = blobURL;
-          link.download = fileName; // You can make this dynamic
+          link.download = fileName;
           link.click();
-          window.URL.revokeObjectURL(blobURL); // Clean up
+          window.URL.revokeObjectURL(blobURL);
         }
     
-        return { ...state, fileBlob }; // Update state if necessary
+        return { ...state, fileBlob };
       }),
       on(UserActions.LogoutSuccess, () => initialMyStudyResourceState)
 
   );
-
-/*export const StudyResourceReducer = createReducer(
-    StudyResourceInitialState,
-    on(StudyResourceActions.CreateAStudyResourceSuccess,(state, {studyResource }) => ({
-        ...state,
-        list: state.list ? [...state.list, studyResource] : [studyResource],
-        myList: state.myList ? [...state.myList, studyResource] : [studyResource]
-    })),
-    on(StudyResourceActions.CreateAStudyResourceFailure,(state,{error}) => ({
-        ...state,
-        error
-    })),
-    on(StudyResourceActions.LoadStudyResourcesSuccess,(state,{studyResources}) => ({
-        ...state,
-        list: studyResources
-    })),
-    on(StudyResourceActions.LoadStudyResourcesFailure,(state,{error}) => ({
-        ...state,
-        error
-    })),
-    on(StudyResourceActions.LoadMyStudyResourcesSuccess,(state,{studyResources}) => ({
-        ...state,
-        myList: studyResources
-    })),
-    on(StudyResourceActions.LoadMyStudyResourcesFailure,(state,{error}) => ({
-        ...state,
-        error
-    })),
-    on(StudyResourceActions.UpdateMyStudyResourceSuccess,(state,{studyResource}) => ({
-        ...state, 
-        myList: state.myList ? state.myList.map(sr => sr.id === studyResource.id ? studyResource : sr) : null,
-        list: state.list ? state.list.map(sr => sr.id === studyResource.id ? studyResource : sr) : null
-    })),
-    on(StudyResourceActions.UpdateMyStudyResourceFailure,(state,{error}) => ({
-        ...state,
-        error
-    })),
-    on(StudyResourceActions.DeleteMyStudyResourceSuccess,(state,{id}) => ({
-        ...state, 
-        list: state.list ? state.list.filter(fc => fc.id !== id) : null,
-        myList: state.myList ? state.myList.filter(fc => fc.id !== id) : null
-    })),
-    on(StudyResourceActions.DeleteMyStudyResourceFailure,(state,{error}) => ({
-        ...state,
-        error
-    })),
-    on(CommentActions.CreateACommentSuccess,(state,{comment}) => ({
-        ...state,
-        list: state.list ? state.list.map(resource => resource.id === comment.studyResourceID ? {...resource, comments: [...resource.comments, comment]} : resource) : null,
-        myList: state.myList ? state.myList.map(resource => resource.id === comment.studyResourceID ? {...resource, comments: [...resource.comments, comment]} : resource) : null
-    })),
-    on(CommentActions.CreateACommentFailure, (state, {error}) => ({
-        ...state,
-        error
-    })),
-    on(StudyResourceActions.DownloadStudyResourcesSuccess, (state, { fileBlob, fileName }) => {
-        // Download file immediately when success action is dispatched
-        if (fileBlob) {
-          const blobURL = window.URL.createObjectURL(fileBlob);
-          const link = document.createElement('a');
-          link.href = blobURL;
-          link.download = fileName; // You can make this dynamic
-          link.click();
-          window.URL.revokeObjectURL(blobURL); // Clean up
-        }
-    
-        return { ...state, fileBlob }; // Update state if necessary
-      }),
-
-    
-)*/

@@ -1,9 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { Emitters } from '../../emmiters/emmiters';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../app.state';
-import { SelectUserFeature } from '../../store/selectors/user.selector';
 import { User } from '../../models/user';
 import { Observable, of } from 'rxjs';
 
@@ -21,16 +19,5 @@ export class HomeComponent implements OnInit{
 
   ngOnInit(): void {
     
-
-    this.httpClient.get("http://localhost:3000/user/user1",{withCredentials:true})
-    .subscribe(
-      res=>{
-        console.log(res); this.message = 'hello hello';
-        Emitters.authEmmiter.emit(true);
-      },
-      err =>{
-        console.log(err)
-        Emitters.authEmmiter.emit(false);
-      });
   }
 }

@@ -34,17 +34,11 @@ export class FlashcardService {
     return flashcard;
   }
 
-  findAll() {
-    return `This action returns all flashcard`;
-  }
 
   findAllForUser(id:number) {
     return this.flashcardRepository.findBy({userID:id});
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} flashcard`;
-  }
 
   async update(id: number, updateFlashcardDto: UpdateFlashcardDto) {
     const updateResult = await this.flashcardRepository.update(id, updateFlashcardDto);

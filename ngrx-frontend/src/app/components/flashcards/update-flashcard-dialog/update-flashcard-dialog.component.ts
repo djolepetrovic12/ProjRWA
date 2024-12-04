@@ -41,7 +41,6 @@ export class UpdateFlashcardDialogComponent implements OnInit {
   }
 
   submit(){
-    //console.log(this.data.id);
     if (this.form.valid) {
           this.store.dispatch(UpdateAFlashcard({id: this.data.id,formData: this.form.getRawValue()}));
     }

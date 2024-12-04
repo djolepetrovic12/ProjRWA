@@ -45,7 +45,7 @@ small
   }
 
   .full-width {
-    width: 100%; /* Make the form field 100% of its parent */
+    width: 100%;
   }
 
   .mat-form-field {
@@ -54,15 +54,14 @@ small
 
   .register-page {
     height: 100%;
-    //width: vw;
     z-index: -1;
-    background-image: url('../../../assets/background-1.jpg'); /* Path to your background image */
-    background-size: cover; /* Ensures the image covers the entire area */
-    background-repeat: no-repeat; /* Prevents the image from repeating */
-    background-position: center; /* Centers the image */
+    background-image: url('../../../assets/background-1.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     display: flex;
-    justify-content: center; /* Centers horizontally */
-    align-items: center; /* Centers vertically */
+    justify-content: center;
+    align-items: center;
     height: 100%;
     overflow: hidden;
   }

@@ -1,4 +1,4 @@
-import { MiddlewareConsumer, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -12,6 +12,8 @@ import { StudyResourceModule } from './study-resource/study-resource.module';
 import { StudyResource } from './study-resource/entities/study-resource.entity';
 import { Flashcard } from './flashcard/entities/flashcard.entity';
 import { Comment } from './comment/entities/comment.entity';
+import { JwtStrategy } from './auth/jwt-strategy/jwt-strategy.service';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
@@ -38,13 +40,11 @@ import { Comment } from './comment/entities/comment.entity';
 
     }),
     
-    
+    PassportModule.register({ defaultStrategy: 'jwt' }),
     JwtModule.register({
       global:true,
-      //to nam treba kada se kreira jwt jer se jwt generize iz header-a, payload-a i secret-a
-      //promeni ovo na kraju kako bi osigurao da tajna ne bude vidljiva nigde, pokusaj da je ubacis is .env fajla
-      secret: 'helloIamAsecret',
-      signOptions:{expiresIn:'1d'}
+      secret: process.env.JWT_SECRET,
+      signOptions:{expiresIn:'1h'}
     }),
     UserModule,
     FlashcardModule,
@@ -52,7 +52,8 @@ import { Comment } from './comment/entities/comment.entity';
     StudyResourceModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, JwtStrategy],
+  exports: [PassportModule]
 })
 export class AppModule {
 

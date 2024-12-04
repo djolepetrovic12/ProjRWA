@@ -1,8 +1,6 @@
 
 <div class="forma">
-    <!--<h2 mat-dialog-title>Fill in the Form</h2>-->
     <mat-dialog-content>
-      <!--<div class="login-container">-->
         <h2>Upload a file</h2>
         <form [formGroup]="form" (submit)="submit()">
             <div>
@@ -36,44 +34,13 @@
                         }
                     }
                 </mat-form-field>
-                <!--<mat-form-field class="full-width" appearance="outline">
-                    <mat-label>Upload File</mat-label>
-                    <label>-->
                         <button mat-button color="primary" (click)="fileInput.click()" type="button" cdkFocusInitial>
                             Choose File
                           </button>
                         <input #fileInput tabindex="-1" hidden formControlName="file"  accept="application/pdf" type="file" required class="form-control" (change)="onFileSelected($event)">
-                        <mat-hint *ngIf="selectedFile">you have selected: {{ selectedFile.name }}</mat-hint>
-                    <!--</label>-->
-                    <!--<button mat-button color="primary" (click)="fileInput.click()" type="button">
-                      Choose File
-                    </button>
-                    <input 
-                      #fileInput 
-                      type="file" 
-                      hidden 
-                      (change)="onFileSelected($event)" 
-                    />
-                    <mat-hint *ngIf="selectedFile">Selected: {{ selectedFile.name }}</mat-hint>-->
-                <!--</mat-form-field>-->  
-                <!--<mat-form-field appearance="outline" class="full-width">
-                    <mat-label>resource link</mat-label>
-                    <input matInput formControlName="resourceLink" type="text" required class="form-control">
-                    @if (form.controls['resourceLink'].invalid && (form.controls['resourceLink'].touched || form.controls['resourceLink'].dirty))
-                    {
-                        @if(form.controls['resourceLink'].errors?.['required']){
-                            <mat-error>*note: this field is required</mat-error>
-                            
-                        }
-                        @if(form.controls['resourceLink'].errors?.['minlength']){
-                            <mat-error>*note: it needs to be at least 10 characters long</mat-error>
-                            
-                        }
-                    }
-                </mat-form-field>-->   
+                        <mat-hint *ngIf="selectedFile">you have selected: {{ selectedFile.name }}</mat-hint>  
             </div>
         </form>
-    <!--</div>-->
     </mat-dialog-content>
     </div>
     <mat-dialog-actions align="end">

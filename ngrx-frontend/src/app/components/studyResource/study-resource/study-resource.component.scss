@@ -6,8 +6,8 @@ mat-card{
 .flexflex
 {
     display:flex;
-    justify-content: start; /* Distributes items with space between */
-    align-items: center;           /* Aligns items vertically */
+    justify-content: start;
+    align-items: center;
     gap: 10px;  
     flex-direction: row;
 }
@@ -18,7 +18,6 @@ mat-card-actions {
     gap: 10px;
   }
   
-  /* Button styling */
   button {
     text-transform: uppercase;
     font-weight: 500;
@@ -27,7 +26,6 @@ mat-card-actions {
     border-radius: 4px;
   }
   
-  /* Primary button (Edit) */
   button[color="primary"] {
     background-color: #19d25a;
     color: white;
@@ -37,7 +35,6 @@ mat-card-actions {
     background-color: #1565c0;
   }
   
-  /* Warn button (Delete) */
   button[color="warn"] {
     background-color: #d32f2f;
     color: white;

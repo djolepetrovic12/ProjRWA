@@ -99,7 +99,6 @@ export class UserEffects {
               this.router.navigate(['/login']);
               return LogoutSuccess({ message: response.message });
             } else {
-              console.log("usao sam fail");
               throw new Error('Logout failed');
             }
           
@@ -212,7 +211,7 @@ export class UserEffects {
             ofType(CreateAStudyResource),
             switchMap(({id,formData}) => 
               this.studyResourceService.createAStudyResource(id,formData).pipe(
-                map((response) =>  CreateAStudyResourceSuccess({studyResource:<StudyResource>response}) ),
+                map((response) => { return CreateAStudyResourceSuccess({studyResource:<StudyResource>response}) }),
                 catchError((error) => of(CreateAStudyResourceFailure({ error:error })))
               )
             )
@@ -224,7 +223,7 @@ export class UserEffects {
               ofType(LoadStudyResources),
               switchMap(() => 
                 this.studyResourceService.loadStudyResources().pipe(
-                  map((response) =>  LoadStudyResourcesSuccess({studyResources:<StudyResource[]>response}) ),
+                  map((response) => {  return LoadStudyResourcesSuccess({studyResources:<StudyResource[]>response}) }),
                   catchError((error) => of(LoadStudyResourcesFailure({ error:error })))
                 )
               )
@@ -260,8 +259,8 @@ export class UserEffects {
                     ofType(DeleteMyStudyResource),
                     switchMap(({id}) => 
                       this.studyResourceService.deleteMyStudyResource(id).pipe(
-                        map((response) => {console.log("hello") ;return DeleteMyStudyResourceSuccess({id:<number>response})}),
-                        catchError((error) => {console.log("bad hello :(") ;return of(DeleteMyStudyResourceFailure({error:error }))})
+                        map((response) => {return DeleteMyStudyResourceSuccess({id:<number>response})}),
+                        catchError((error) => {return of(DeleteMyStudyResourceFailure({error:error }))})
                       )
                     )
                     )
@@ -286,7 +285,6 @@ export class UserEffects {
                           this.studyResourceService.downloadMyStudyResource(resourceID).pipe(
                             map((response: HttpResponse<Blob>) =>{
                               const contentDisposition = response.headers.get('Content-Disposition');
-                              console.log(contentDisposition);
                               const fileName = contentDisposition?.split('filename=')[1]?.replace(/"/g, '') || 'downloaded-file.pdf';
                               return DownloadStudyResourcesSuccess({resourceID,fileBlob:response.body!,fileName})}),
                             catchError((error) => of(DownloadStudyResourcesFailure({ error:error })))
@@ -302,7 +300,6 @@ export class UserEffects {
                             this.studyResourceService.downloadMyStudyResource(resourceID).pipe(
                               map((response: HttpResponse<Blob>) =>{
                                 const contentDisposition = response.headers.get('Content-Disposition');
-                                console.log(contentDisposition);
                                 const fileName = contentDisposition?.split('filename=')[1]?.replace(/"/g, '') || 'downloaded-file.pdf';
                                 return DownloadMyStudyResourcesSuccess({resourceID,fileBlob:response.body!,fileName})}),
                               catchError((error) => of(DownloadMyStudyResourcesFailure({ error:error })))
@@ -317,8 +314,8 @@ export class UserEffects {
                           ofType(SearchItems),
                           switchMap(({query,professorIDs}) => 
                             this.studyResourceService.searchMyStudyResources(query,professorIDs).pipe(
-                              map((response) =>  {console.log(response) ;return LoadStudyResourcesSuccess({studyResources:<StudyResource[]>response}) } ),
-                              catchError((error) => { console.log(error);return of(LoadStudyResourcesFailure({ error:error }))})
+                              map((response) =>  {return LoadStudyResourcesSuccess({studyResources:<StudyResource[]>response}) } ),
+                              catchError((error) => {return of(LoadStudyResourcesFailure({ error:error }))})
                             )
                           )
                           )
@@ -329,8 +326,8 @@ export class UserEffects {
                             ofType(SearchProfessors),
                             switchMap(({query}) => 
                               this.studyResourceService.searchProfessors(query).pipe(
-                                map((response) =>  {console.log(response) ;return SearchProfessorsSuccess({professors:<User[]>response}) } ),
-                                catchError((error) => { console.log(error);return of(SearchProfessorsFailure({ error:error }))})
+                                map((response) =>  {return SearchProfessorsSuccess({professors:<User[]>response}) } ),
+                                catchError((error) => {return of(SearchProfessorsFailure({ error:error }))})
                               )
                             )
                             )

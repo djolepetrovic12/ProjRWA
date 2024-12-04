@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Emitters } from '../../emmiters/emmiters';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
@@ -30,19 +29,6 @@ export class NavbarComponent implements OnInit{
     this.authenticated$ = this.store.select(SelectAuthFeature);
     this.userRole$ = this.store.select(SelectUserRoleFeature);
     
-
-    /*this.authenticated$.subscribe(auth => {
-      if(!auth)
-      {
-        console.log(auth + 'u funkciji');
-        this.router.navigate(['/login']);
-      }
-      if(auth)
-        console.log('autentifikovan sam');
-    })
-    /*Emitters.authEmmiter.subscribe(
-      (auth:boolean) => { this.authenticated = auth;}
-    )*/
   }
 
   logout():void 
@@ -50,9 +36,6 @@ export class NavbarComponent implements OnInit{
 
     this.store.dispatch(Logout());
 
-    /*
-    this.httpClient.post("http://localhost:3000/user/logout",{},{withCredentials:true})
-    .subscribe(()=> this.authenticated=false);*/
   }
    
 

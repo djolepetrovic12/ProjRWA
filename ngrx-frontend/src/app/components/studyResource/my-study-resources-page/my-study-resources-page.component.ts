@@ -35,7 +35,6 @@ export class MyStudyResourcesPageComponent implements OnInit {
       }
   })
     
-    //this.studyResourcesList$ = this.store.select(SelectMyStudyResourcesFeature);
   }
   
   ngOnInit(): void {

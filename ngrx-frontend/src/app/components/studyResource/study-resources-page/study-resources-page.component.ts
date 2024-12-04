@@ -38,49 +38,32 @@ export class StudyResourcesPageComponent implements OnInit{
     this.store.dispatch(LoadStudyResources());
     this.studyResourcesList$ = this.store.select(SelectStudyResourcesFeature);
 
-    /*this.searchControl.valueChanges
-      .pipe(
-        debounceTime(500), // Wait 300ms after the user stops typing
-        distinctUntilChanged(), // Prevent duplicate queries
-        filter((query) => (query as string).length > 3) // Only trigger for meaningful input
-      )
-      .subscribe((query) => {
-        if(query)
-        this.store.dispatch(SearchItems({ query })); // Dispatch the search action
-      });*/
 
     this.searchProfsControl.valueChanges
     .pipe(
-      debounceTime(500), // Wait 300ms after the user stops typing
-      distinctUntilChanged(), // Prevent duplicate queries
-      filter((query) => (query as string).length > 3) // Only trigger for meaningful input
+      debounceTime(500),
+      distinctUntilChanged(),
+      filter((query) => (query as string).length > 3)
     )
     .subscribe((query) => {
       if(query)
         this.studyResourceService.searchProfessors(query)
       .subscribe(
         (response) => {
-          console.log('Professors:', response); // Debug log
-          this.professorsList$ = <User[]>response; // Store the data in the array
-          console.log(this.professorsList$);
+          this.professorsList$ = <User[]>response;
         },
         (error) => {
-          console.error('Error fetching professors:', error); // Handle errors
+          console.error('Error fetching professors:', error);
         }
         
       )
-      //this.store.dispatch(SearchProfessors({ query })); // Dispatch the search action
     });
 
-    this.selectedProfessors$.subscribe(users => {
-      console.log('Selected professors:', users);
-    });
 
   }
   
   ngOnInit(): void {
 
-    //this.studyResourcesList$.subscribe((sr) => {console.log(sr);})
     this.UserID$ = this.store.select(SelectUserIDFeature);
 
     this.UserID$.pipe(take(1)).subscribe((userID) => {
@@ -89,26 +72,16 @@ export class StudyResourcesPageComponent implements OnInit{
       }
   })
 
-
-  /*this.searchControl.valueChanges
-  .pipe(
-    debounceTime(500),
-    distinctUntilChanged(),
-    filter((query) => (query as string).length > 3),
-    withLatestFrom(this.selectedProfessors$) // Combine with the latest professors
-  )*/
   combineLatest([
     this.searchControl.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
       filter((query) => (query as string).length > 3)
     ),
-    this.selectedProfessors$ // Emits the latest professors
+    this.selectedProfessors$
   ])
   .subscribe(([query, users]) => {
-    const selectedIds = users.map((user) => user.id); // Extract IDs dynamically
-    console.log('Search query:', query);
-    console.log('Selected Professor IDs:', selectedIds);
+    const selectedIds = users.map((user) => user.id);
 
     if(query)
     this.store.dispatch(
@@ -127,32 +100,26 @@ export class StudyResourcesPageComponent implements OnInit{
 
   }
 
-  openDialog()
-  {
-    //this.matDialogRef.open(AddFlashcardDialogComponent);
-  }
 
   onOptionSelected($event: MatAutocompleteSelectedEvent) {
-    console.log($event.option.value);
+    //console.log($event.option.value);
   }
 
   addUser(user: User) {
-    const currentProfessors = this.selectedProfessorsSubject.getValue(); // Get current array
+    const currentProfessors = this.selectedProfessorsSubject.getValue();
 
-    // Check if the user already exists in the list by comparing their id
     const userExists = currentProfessors.some(professor => professor.id === user.id);
 
     if (!userExists) {
-    const updatedProfessors = [...currentProfessors, user]; // Add the new user
-    this.selectedProfessorsSubject.next(updatedProfessors); // Emit updated array
+    const updatedProfessors = [...currentProfessors, user];
+    this.selectedProfessorsSubject.next(updatedProfessors);
     }
   }
 
-  // Optional: Method to remove a user from the selected list
   removeUser(user: User) {
     const currentProfessors = this.selectedProfessorsSubject.getValue();
-    const updatedProfessors = currentProfessors.filter(u => u.id !== user.id); // Remove by ID
-    this.selectedProfessorsSubject.next(updatedProfessors); // Emit updated array
+    const updatedProfessors = currentProfessors.filter(u => u.id !== user.id);
+    this.selectedProfessorsSubject.next(updatedProfessors);
   }
 
 

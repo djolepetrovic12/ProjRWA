@@ -55,7 +55,6 @@ export class CreateAStudyResourceDialogComponent implements OnInit {
         formData.append('description', this.form.get('description')?.value);
         formData.append('file', this.selectedFile);
         formData.append('resourceLink', String(new Date() + String(Math.random()*1e6)));
-        console.log("zdravo ja sam create resource dijalog");
         this.store.dispatch(CreateAStudyResource({id:userID,formData:formData}));
       }
     });

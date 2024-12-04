@@ -28,7 +28,6 @@ export class UserService {
   register(formData:any)
   {
     return this.httpClient.post("http://localhost:3000/user/register", formData);
-    //.subscribe(() => this.router.navigate(['/login']));
   }
 
   getAllUsers(userID:number)
@@ -48,14 +47,3 @@ export class UserService {
 
 }
 
-
-
-
-/*this.httpClient.post("http://localhost:3000/user/login", this.form.getRawValue(),{withCredentials:true})
-    .subscribe(
-      (response) => {this.router.navigate(['/']);},
-      (error) => {
-        const errorMessage = error.error?.message || 'An unknown error occurred';
-        console.log(errorMessage);
-      }
-    );*/

@@ -45,11 +45,10 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator; // Attach paginator
-    this.dataSource.sort = this.sort; // Attach sort
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  // Example action methods
   edit(user: User): void {
     this.userRole$.pipe(take(1)).subscribe((role) => {
       if (role === 'ADMIN') {

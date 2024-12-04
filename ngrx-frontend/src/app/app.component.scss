@@ -1,20 +1,20 @@
 html, body {
-    height: 100%; /* Ensure the viewport fills the page */
-    margin: 0; /* Remove default browser margin */
+    height: 100%;
+    margin: 0;
   }
   
   .app-container {
     display: flex;
-    flex-direction: column; /* Stack elements vertically */
-    height: 100vh; /* Full height of the viewport */
+    flex-direction: column;
+    height: 100vh;
   }
   
   app-navbar {
-    flex: 0 0 auto; /* Navbar gets its natural height */
-    z-index: 2; /* Keep the navbar above other elements, if needed */
+    flex: 0 0 auto;
+    z-index: 2;
   }
   
   main {
-    flex: 1 1 auto; /* Take up the remaining space */
-    overflow-y: auto; /* Allow scrolling if the content overflows */
+    flex: 1 1 auto;
+    overflow-y: auto;
   }

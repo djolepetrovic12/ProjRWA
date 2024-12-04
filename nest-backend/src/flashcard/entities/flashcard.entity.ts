@@ -21,7 +21,6 @@ export class Flashcard {
     @Column({name:'user_id'})
     userID: number;
 
-    //user
     @ManyToOne(()=> User, (user)=>user.flashcards, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'user_id'})
     user:User;

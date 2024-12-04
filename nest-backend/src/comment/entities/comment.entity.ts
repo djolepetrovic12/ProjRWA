@@ -27,7 +27,6 @@ export class Comment {
     @ManyToOne(()=> StudyResource, (studyResource)=>studyResource.comments, {onDelete: 'CASCADE'})
     @JoinColumn({name: 'studyResource_id'})
     studyResource:StudyResource;
-    //studyResource
 
 }
 

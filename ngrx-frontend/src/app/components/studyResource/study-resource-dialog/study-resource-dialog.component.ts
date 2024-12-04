@@ -28,11 +28,10 @@ export class StudyResourceDialogComponent implements OnInit {
    
     const textarea = document.querySelector('.comment-input');
 
-  // Auto-resize the textarea height
   if(textarea)
     textarea.addEventListener('input', (event ) => {
-      const target = event.target as HTMLTextAreaElement; // Type assertion
-      target.style.height = 'auto'; // Reset the height
+      const target = event.target as HTMLTextAreaElement;
+      target.style.height = 'auto';
       target.style.height = `${target.scrollHeight}px`;
     });
       

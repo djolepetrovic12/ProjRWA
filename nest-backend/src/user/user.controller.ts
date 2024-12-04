@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
-import {JwtService} from '@nestjs/jwt';
+import {JwtModule, JwtService} from '@nestjs/jwt';
 import { Response,Request, response } from 'express';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe, NotFoundException } from '@nestjs/common';
@@ -20,7 +20,6 @@ export class UserController {
 
   @Post('register')
   async register(@Body(ValidationPipe) createUserDto: CreateUserDto) {
-    //2. parametar je koliko round-a treba da izvrsi
     const hashedPassword = await bcrypt.hash(createUserDto.password,12);
 
     const user = await this.userService.create({
@@ -46,12 +45,12 @@ export class UserController {
 
     if(!user)
     {
-      throw new NotFoundException('dati korisnik ne postoji');
+      throw new UnauthorizedException('incorrect credentials');
     }
 
     if(!await bcrypt.compare(sifra,user.password))
     {
-      throw new BadRequestException('neispravni kredencijali');
+      throw new UnauthorizedException('incorrect credentials');
     }
 
     //sa signAsync definisemo payload koji ce se nalaziti u tokenu
@@ -67,25 +66,12 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   @Get('user1')
   async user(@Req() request : Request){
-    
-    try
-    {
-      const cookie = request.cookies['jwt'];
-      const data = await this.jwtService.verifyAsync(cookie);
-      if(!data)
-      {
-        throw new UnauthorizedException();
-      }
 
-      const user = await this.userService.findOne( data['id']);
-      const {password, ...korisnik} = user;
-
-      return korisnik;
-    }
-    catch(e)
-    {
+    const user = request.user;
+  if (!user) {
     throw new UnauthorizedException();
-    }
+  }
+  return user;
 
   }
 
@@ -125,14 +111,12 @@ export class UserController {
 
     Logger.log(`Absolute folder path: ${absoluteFolderPath}`);
 
-    // Check if the folder exists
     if (!fs.existsSync(absoluteFolderPath)) {
       Logger.error('Folder not found:', absoluteFolderPath);
       throw new NotFoundException('Folder not found');
     }
 
     try {
-      // Delete the folder and its contents
       fs.rmSync(absoluteFolderPath, { recursive: true, force: true });
       Logger.log(`Folder deleted successfully: ${absoluteFolderPath}`);
     } catch (error) {
