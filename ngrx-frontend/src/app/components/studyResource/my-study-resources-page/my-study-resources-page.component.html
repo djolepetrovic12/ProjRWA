@@ -1,12 +1,22 @@
 <div class="componentDiv">
-<div>
-    <p>have a resource you want to upload?</p>
-    <button mat-flat-button (click)="openDialog()">
-        <mat-icon>upload_file</mat-icon> upload resource
-    </button>
-</div>
+    <div class="centerPrompt">
+        <div>
+            <p class="pEl">have a resource you want to upload?</p>
+            <button class="pEl" style="display: inline-flex; align-items: center;" mat-flat-button (click)="openDialog()">
+                <mat-icon>upload_file</mat-icon> upload resource
+            </button>
+        </div>
+    </div>
+    <div class="titleRes">
+        <div>
+            <h2>here are all your resources</h2>
+        </div>
+    </div>
+    
 
-<div *ngFor="let studyResource of studyResourcesList$ | async">
-    <app-study-resource [studyResourceInfo]="studyResource" [myResources]="true"> </app-study-resource>
-</div>
+    <div class="flexbox">
+        <div *ngFor="let studyResource of studyResourcesList$ | async">
+                <app-study-resource [studyResourceInfo]="studyResource" [myResources]="true"> </app-study-resource>
+        </div>
+    </div>
 </div>

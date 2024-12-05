@@ -1,15 +1,18 @@
+.studyRes
+{
+  min-width: 400px;
+  max-width: 500px;
+  margin:20px 6px
+}
+
 mat-card{
-    max-width: 400px;
-    margin:20px 30px,
+    width:100%;
 }
 
 .flexflex
 {
     display:flex;
-    justify-content: start;
-    align-items: center;
-    gap: 10px;  
-    flex-direction: row;
+    margin-top:30px;
 }
 
 mat-card-actions {

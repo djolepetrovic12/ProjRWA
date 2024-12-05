@@ -1,6 +1,7 @@
 .example-card {
-    max-width: 400px;
-    margin: 20px auto;
+
+    width: 400px;
+    margin: 20px 5px;
     padding: 16px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -49,17 +50,20 @@
     background-color: #000000;
   }
 
-  mat-card-content p:first-of-type {
+  .textContent {
+    width: 100%;
     font-style: italic;
     font-size: 18px;
     color: #4a4a4a;
     margin-bottom: 4px;
   }
   
-  mat-card-content p:nth-of-type(2) {
+  .textExplanation {
+    width: 100%;
     font-family: 'Times New Roman', Times, serif;
     font-size: 16px;
     color: #333;
+    text-align: justify;
   }
 
   ::ng-deep .default-chip {
@@ -92,4 +96,24 @@
   
   ::ng-deep .pink-chip {
     background-color: #e91e63;
+  }
+
+  mat-chip
+  {
+    scale:calc(0.7)
+  }
+
+  .textDiv
+  {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    white-space: normal;
+  }
+  .stayFlexy
+  {
+    width: 100%;
+    display:flex;
+    justify-content: start;
+    margin-top:-28px;
+    margin-left: -30px;
   }

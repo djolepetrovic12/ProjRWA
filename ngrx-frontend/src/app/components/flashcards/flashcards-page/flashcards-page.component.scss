@@ -2,3 +2,22 @@
 {
     min-height: 100vh;
 }
+
+.flexbox
+{
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: start;
+    gap: 10px;  
+    flex-direction: row; 
+}
+
+.centerDiv
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top:20px;
+}

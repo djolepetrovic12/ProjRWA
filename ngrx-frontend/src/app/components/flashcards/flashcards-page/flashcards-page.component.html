@@ -1,9 +1,17 @@
 <div class="componentDiv">
-<button mat-flat-button (click)="openDialog()">
-    add a flashcard
-</button>
+<div class="centerDiv">
+  <div>
+    <p style="display:inline-block; margin-right:10px">want to add a flashcard? </p>
+    <div style="display:inline-block">
+      <button style="display: inline-flex; align-items: center;" mat-flat-button (click)="openDialog()">
+        <mat-icon>add</mat-icon>
+          add a flashcard
+      </button>
+    </div>
+  </div>
+</div>
 
-<div *ngIf="flashcardsList$ | async as flashcards">
+<div class="flexbox" *ngIf="flashcardsList$ | async as flashcards">
     <div *ngFor="let flashcard of flashcards">
       <app-flashcard [flashcardInfo]="flashcard"></app-flashcard>
     </div>
