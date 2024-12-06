@@ -1,12 +1,12 @@
 .studyRes
 {
-  min-width: 400px;
-  max-width: 500px;
-  margin:20px 6px
+  width: 400px;
+  margin:20px 6px;
 }
 
 mat-card{
     width:100%;
+    border-top:4px solid black;
 }
 
 .flexflex
@@ -19,9 +19,9 @@ mat-card-actions {
     display: flex;
     justify-content: flex-end;
     gap: 10px;
-  }
+}
   
-  button {
+button {
     text-transform: uppercase;
     font-weight: 500;
     font-size: 14px;
@@ -29,20 +29,27 @@ mat-card-actions {
     border-radius: 4px;
   }
   
-  button[color="primary"] {
+button[color="primary"] {
     background-color: #19d25a;
     color: white;
   }
   
-  button[color="primary"]:hover {
+button[color="primary"]:hover {
     background-color: #1565c0;
   }
   
-  button[color="warn"] {
+button[color="warn"] {
     background-color: #d32f2f;
     color: white;
   }
   
-  button[color="warn"]:hover {
+button[color="warn"]:hover {
     background-color: #000000;
   }
+
+.text
+{
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}

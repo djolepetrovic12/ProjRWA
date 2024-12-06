@@ -1,6 +1,4 @@
-
-<div class="forma">
-    <mat-dialog-content>
+<mat-dialog-content>
         <h2>Upload a file</h2>
         <form [formGroup]="form" (submit)="submit()">
             <div>
@@ -41,13 +39,12 @@
                         <mat-hint *ngIf="selectedFile">you have selected: {{ selectedFile.name }}</mat-hint>  
             </div>
         </form>
-    </mat-dialog-content>
-    </div>
-    <mat-dialog-actions align="end">
+</mat-dialog-content>
+<mat-dialog-actions align="end">
         <div class="formButtonDiv">
             <div class="formButton">
                 <button mat-button mat-dialog-close>Cancel</button>
                 <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid" (click)="submit()">Upload file</button>
             </div>
         </div>
-    </mat-dialog-actions>
+</mat-dialog-actions>

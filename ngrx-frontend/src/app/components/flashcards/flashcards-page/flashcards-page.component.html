@@ -11,9 +11,38 @@
   </div>
 </div>
 
-<div class="flexbox" *ngIf="flashcardsList$ | async as flashcards">
-    <div *ngFor="let flashcard of flashcards">
-      <app-flashcard [flashcardInfo]="flashcard"></app-flashcard>
+<mat-tab-group>
+  <mat-tab label="Words">
+    <div class="flexbox" *ngIf="typeWordFlashcards$ | async as flashcards1">
+      <div *ngFor="let flashcard of flashcards1">
+        <app-flashcard [flashcardInfo]="flashcard"></app-flashcard>
+      </div>
     </div>
-  </div>
+  </mat-tab>
+
+  <mat-tab label="Phrases">
+    <div class="flexbox" *ngIf="typePhraseFlashcards$ | async as flashcards2">
+      <div *ngFor="let flashcard of flashcards2">
+        <app-flashcard [flashcardInfo]="flashcard"></app-flashcard>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="Sentences">
+    <div class="flexbox" *ngIf="typeSentenceFlashcards$ | async as flashcards3">
+      <div *ngFor="let flashcard of flashcards3">
+        <app-flashcard [flashcardInfo]="flashcard"></app-flashcard>
+      </div>
+    </div>
+  </mat-tab>
+
+  <mat-tab label="General Memos">
+    <div class="flexbox" *ngIf="typeGeneralFlashcards$ | async as flashcards4">
+      <div *ngFor="let flashcard of flashcards4">
+        <app-flashcard [flashcardInfo]="flashcard"></app-flashcard>
+      </div>
+    </div>
+  </mat-tab>
+</mat-tab-group>
+  
 </div>

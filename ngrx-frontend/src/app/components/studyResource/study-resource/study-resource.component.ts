@@ -30,7 +30,7 @@ export class StudyResourceComponent {
   ){}
   
   onclick() {
-  this.matDialogRef.open(StudyResourceDialogComponent,{data:this.studyResourceInfo})
+  this.matDialogRef.open(StudyResourceDialogComponent,{width:'700px',data:this.studyResourceInfo})
   }
 
   delete() {

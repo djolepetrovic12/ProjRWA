@@ -14,6 +14,7 @@ import { DownloadMyStudyResources, DownloadStudyResources } from '../../../store
 })
 export class StudyResourceDialogComponent implements OnInit {
 
+
   userID$: Observable<number | undefined> = this.store.select(SelectUserIDFeature);
  
 
@@ -39,21 +40,34 @@ export class StudyResourceDialogComponent implements OnInit {
 
 
   addComment() {
-    this.userID$.pipe(take(1)).subscribe((userID) => {
-      if (userID) {
-        this.store.dispatch(CreateAComment({userID,resourceID:this.data.id,content: this.getText()}));
-      }
-      else
-      {
-        alert("hey, you don't have permission to do that!");
-      }
-    });
+    if(this.getText().length > 1)
+    {
+      this.userID$.pipe(take(1)).subscribe((userID) => {
+        if (userID) {
+          this.store.dispatch(CreateAComment({userID,resourceID:this.data.id,content: this.getText()}));
+        }
+        else
+        {
+          alert("hey, you don't have permission to do that!");
+        }
+      });
+    }
+
+  }
+
+  setToEmptyString() {
+    this.setText();
   }
 
   getText() {
     const textarea = document.getElementById('myTextarea') as HTMLTextAreaElement;
       const text = textarea.value;
       return text;
+  }
+
+  setText() {
+    const textarea = document.getElementById('myTextarea') as HTMLTextAreaElement;
+      textarea.value = "";
   }
 
 
@@ -80,5 +94,7 @@ export class StudyResourceDialogComponent implements OnInit {
 
     return `${day}/${month}/${year}`;
   }
+
+
 
 }

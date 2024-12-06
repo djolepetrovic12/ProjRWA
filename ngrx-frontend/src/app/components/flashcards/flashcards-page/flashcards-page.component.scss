@@ -21,3 +21,22 @@
     text-align: center;
     margin-top:20px;
 }
+
+.typeTitles
+{
+    margin:20px;
+    display:flex;
+    justify-content: center;
+    //border-bottom:1px solid black;
+}
+
+.typeTitles > h3
+{
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-style: italic;
+}
+
+mat-tab-group
+{
+    margin:20px 0px;
+}

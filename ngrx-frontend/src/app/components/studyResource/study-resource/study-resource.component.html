@@ -1,12 +1,16 @@
-<div class="studyRes">
+<div class="studyRes text">
 <mat-card >
     <div class="flexflex" (click)="onclick()">
         <div>
-            <img src="./../../../../assets/image.png"  width="100" height="100"/>
+            <img src="./../../../../assets/image.png"  width="100" height="100" style="margin:10px"/>
         </div>
         <div class="infoSection">
-            <p>title: "{{studyResourceInfo.title}}"</p>
-            <p>author: {{studyResourceInfo.user.name}} {{studyResourceInfo.user.surname}}</p>
+            <div class="text">
+                <p>title: "{{studyResourceInfo.title}}"</p>
+            </div>
+            <div>
+                <p>author: {{studyResourceInfo.user.name}} {{studyResourceInfo.user.surname}}</p>
+            </div>
         </div>
     </div>
     <mat-card-actions *ngIf="myResources">

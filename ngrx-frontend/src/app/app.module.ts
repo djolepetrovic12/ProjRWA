@@ -48,6 +48,11 @@ import { AdminDashboardComponent } from './components/admin-dashboard/admin-dash
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { UpdateUserDialogComponent } from './components/update-user-dialog/update-user-dialog.component';
+import { StudyResourceEffects } from './store/effects/studyResource.effects';
+import { CommentEffects } from './store/effects/comment.effects';
+import { FlashcardEffects } from './store/effects/flashcard.effects';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 @NgModule({
@@ -94,8 +99,10 @@ import { UpdateUserDialogComponent } from './components/update-user-dialog/updat
     MatAutocompleteModule,
     MatPaginatorModule,
     MatSortModule,
+    MatTabsModule,
+    MatMenuModule,
     StoreModule.forRoot<AppState>({ user: UserReducer, flashcards:FlashcardReducer, studyResources:StudyResourceReducer, myStudyResources:MyStudyResourceReducer}),
-    EffectsModule.forRoot([UserEffects]),
+    EffectsModule.forRoot([UserEffects,StudyResourceEffects,CommentEffects,FlashcardEffects]),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: true,

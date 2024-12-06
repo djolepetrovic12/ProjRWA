@@ -1,38 +1,49 @@
 <mat-toolbar class="mat-elevation-z3">
   <div class="mainDiv">
-  <div>
-  <a routerLink="/"><img src="../../../assets/myLogoRWA.png" height="60" width="170"></a>
-  </div>
+    <div>
+    <a routerLink="/"><img src="../../../assets/myLogoRWA.png" height="60" width="170"></a>
+    </div>
  
 
   <div class="spacerr">
     <ng-container *ngIf="authenticated$ | async; else falseTemplate" >
-    <span *ngIf="(userRole$ | async ) === 'PROFESSOR' || (userRole$ | async ) === 'STUDENT' ">
-      <a mat-flat-button class="buttons" routerLink="/flashcards" color="accent">flashcards</a>
-    </span> 
-    <span *ngIf="(userRole$ | async ) === 'PROFESSOR' || (userRole$ | async ) === 'STUDENT' || (userRole$ | async ) === 'ADMIN' ">
-      <a mat-flat-button class="buttons" routerLink="/studyResources" color="accent">resources</a>
-    </span>
-    <span *ngIf="(userRole$ | async ) === 'ADMIN'">
-      <a mat-flat-button class="buttons" routerLink="/admin-dashboard" color="accent">admin dashboard</a>
-    </span>
-    <span *ngIf="(userRole$ | async ) === 'PROFESSOR'">
-      <a mat-flat-button class="buttons" routerLink="/myStudyResources" color="accent">my resources</a>
-    </span>
+
+      <span>
+        <a mat-icon-button class="buttons" [matMenuTriggerFor]="menu">
+          <mat-icon>menu</mat-icon>
+        </a>
+      </span>
+      
+      <mat-menu #menu="matMenu" >
+
+        <span *ngIf="(userRole$ | async ) === 'PROFESSOR' || (userRole$ | async ) === 'STUDENT' ">
+          <a mat-menu-item routerLink="/flashcards" color="accent">flashcards</a>
+        </span> 
+        <span *ngIf="(userRole$ | async ) === 'PROFESSOR' || (userRole$ | async ) === 'STUDENT' || (userRole$ | async ) === 'ADMIN' ">
+          <a mat-menu-item routerLink="/studyResources" color="accent">resources</a>
+        </span>
+        <span *ngIf="(userRole$ | async ) === 'ADMIN'">
+          <a mat-menu-item routerLink="/admin-dashboard" color="accent">admin dashboard</a>
+        </span>
+        <span *ngIf="(userRole$ | async ) === 'PROFESSOR'">
+          <a mat-menu-item routerLink="/myStudyResources" color="accent">my resources</a>
+        </span>
+
+      </mat-menu>
 
     <span>
       <a mat-icon-button class="buttons logout" (click)="logout()"> <mat-icon>logout</mat-icon> </a>
     </span> 
   
     </ng-container>
-  <ng-template #falseTemplate>
-    <span>
-      <a mat-button class="buttons" routerLink="/login">Log in</a>
-    </span>
-    <span>
-      <a mat-flat-button class="buttons" routerLink="/register" color="accent">Sign up</a>
-    </span>
-  </ng-template>
+    <ng-template #falseTemplate>
+      <span>
+        <a mat-button class="buttons" routerLink="/login">Log in</a>
+      </span>
+      <span>
+        <a mat-flat-button class="buttons" routerLink="/register" color="accent">Sign up</a>
+      </span>
+    </ng-template>
   </div>
 </div>
 </mat-toolbar>

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../app.state';
-import { Observable, take } from 'rxjs';
-import { Flashcard } from '../../../models/flashcard';
+import { map, Observable, take } from 'rxjs';
+import { FCTypes, Flashcard } from '../../../models/flashcard';
 import { SelectFlashcardsFeature } from '../../../store/selectors/flashcard.selector';
 import { LoadFlashcards } from '../../../store/actions/flashcard.actions';
 import { SelectUserIDFeature } from '../../../store/selectors/user.selector';
@@ -18,6 +18,11 @@ export class FlashcardsPageComponent implements OnInit {
   
   flashcardsList$ : Observable<Flashcard[] | null>;
   UserID$ : Observable<number | undefined>;
+
+  typeWordFlashcards$: Observable<Flashcard[]>;
+  typePhraseFlashcards$: Observable<Flashcard[]>;
+  typeSentenceFlashcards$: Observable<Flashcard[]>;
+  typeGeneralFlashcards$: Observable<Flashcard[]>;
   
   constructor(
     private store:Store<AppState>,
@@ -34,6 +39,23 @@ export class FlashcardsPageComponent implements OnInit {
         this.store.dispatch(LoadFlashcards({ id:userID}));
       }
   })
+
+  this.typeWordFlashcards$ = this.flashcardsList$.pipe(
+    map((flashcards) => flashcards?.filter((card) => card.type === FCTypes.Word) || [])
+  );
+
+  this.typePhraseFlashcards$ = this.flashcardsList$.pipe(
+    map((flashcards) => flashcards?.filter((card) => card.type === FCTypes.Phrase) || [])
+  );
+
+  this.typeSentenceFlashcards$ = this.flashcardsList$.pipe(
+    map((flashcards) => flashcards?.filter((card) => card.type === FCTypes.Sentence) || [])
+  );
+
+  this.typeGeneralFlashcards$ = this.flashcardsList$.pipe(
+    map((flashcards) => flashcards?.filter((card) => card.type === FCTypes.General) || [])
+  );
+
 
   }
 

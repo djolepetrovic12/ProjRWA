@@ -1,4 +1,4 @@
-<div>
+<div class="dialogDiv text">
     <mat-dialog-content>
 
         <h3>resource view</h3>
@@ -19,22 +19,20 @@
             <div class="comment-section">
             <textarea class="comment-input" id="myTextarea" placeholder="Write a comment..."></textarea>
             </div>
-            <div>
-                <button mat-flat-button (click)="addComment()">
+            <div class="buttons">
+                <button class="bttns" mat-flat-button (click)="addComment()">
                     add
                 </button>
-                <button mat-flat-button>
+                <button class="bttns" mat-flat-button (click)="setToEmptyString()">
                     cancel
                 </button>
             </div>
             
         </mat-card>
 
-        <mat-card>
             <div *ngFor="let comment of this.data.comments">
                 <app-comment-card [commentInfo]="comment"></app-comment-card>
             </div>
-        </mat-card>
 
 
     </mat-dialog-content>

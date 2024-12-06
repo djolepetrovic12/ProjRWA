@@ -1,16 +1,28 @@
-.flexflex{
-    min-width: 500px;
+/*.flexflex{
+  width: 90%;
 }
 
+mat-dialog-content
+{
+  width:90%;
+}*/
+
+.dialogDiv
+{
+  width:100%;
+}
 
 .comment-section {
-    width: 100%; 
-    max-width: 600px; 
-    margin: 20px auto; 
-  }
+  width:100%;
+  display:flex;
+  max-width: 600px; 
+  margin: 20px auto;
+  justify-content: center;
+}
   
   .comment-input {
-    width: 90%;
+
+    width: 95%;
     min-height: 40px;    
     max-height: 200px;   
     padding: 10px;       
@@ -32,5 +44,31 @@
 
   mat-card {
     margin: 10px 0px;
+    width: 100%;
   }
   
+  mat-dialog-content
+  {
+    overflow-y: scroll;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+
+.buttons
+{
+  display:flex;
+  justify-content: flex-start;
+}
+
+.bttns
+{
+  margin-left:10px;
+  margin-bottom: 10px;
+}
+
+.text
+{
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  white-space: normal;
+}
