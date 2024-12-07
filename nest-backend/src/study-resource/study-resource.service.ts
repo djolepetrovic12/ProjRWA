@@ -36,12 +36,12 @@ export class StudyResourceService {
     return SR;
   }
 
-  async findAll() {
-    return await this.studyResourceRepository.find({relations:['user','comments','comments.user']});
+  async findInitial() {
+    return await this.studyResourceRepository.find({order: { dateUploaded: 'DESC' },take:20,relations:['user','comments','comments.user']});
   }
 
   findAllForUser(id:number) {
-    return this.studyResourceRepository.find({where:{userID:id},relations:['user','comments','comments.user']});
+    return this.studyResourceRepository.find({order: { dateUploaded: 'DESC' },where:{userID:id},relations:['user','comments','comments.user']});
   }
 
   async update(id: number, updateStudyResourceDto: UpdateStudyResourceDto) {
@@ -76,17 +76,21 @@ export class StudyResourceService {
           title: Like(`%${query}%`),
           userID: In(professorIDs)
         },
+        take:50,
+        order: { dateUploaded: 'DESC' },
         relations: ['user', 'comments', 'comments.user'], 
       });
       }
       else if (query) {
         return this.studyResourceRepository.find({
           where: { title: Like(`%${query}%`) },
+          take:50,
+          order: { dateUploaded: 'DESC' },
           relations: ['user', 'comments', 'comments.user'],
         });
       } 
       else {
-        return this.studyResourceRepository.find({ relations: ['user', 'comments', 'comments.user'] }); 
+        return this.studyResourceRepository.find({take:50, relations: ['user', 'comments', 'comments.user'] }); 
       } 
     }
 

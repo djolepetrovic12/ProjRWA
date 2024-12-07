@@ -17,7 +17,7 @@ export class StudyResourceService {
   }
 
   loadStudyResources(){
-    return this.httpClient.get(this.studyResourceURL + 'findAll/' ,{withCredentials:true});
+    return this.httpClient.get(this.studyResourceURL + 'findInitial/' ,{withCredentials:true});
   }
 
   loadMyStudyResources(id:number){

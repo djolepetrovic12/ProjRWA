@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { BehaviorSubject, combineLatest, debounceTime, distinctUntilChanged, filter, map, merge, Observable, take, withLatestFrom } from 'rxjs';
 import { StudyResource } from '../../../models/studyResource';
 import { Store } from '@ngrx/store';
@@ -12,6 +12,7 @@ import { User } from '../../../models/user';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { UserService } from '../../../services/User/user-service.service';
 import { StudyResourceService } from '../../../services/StudyResource/study-resource.service';
+import { MatPaginator } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-study-resources-page',
@@ -76,20 +77,26 @@ export class StudyResourcesPageComponent implements OnInit{
     this.searchControl.valueChanges.pipe(
       debounceTime(500),
       distinctUntilChanged(),
-      filter((query) => (query as string).length > 3)
     ),
     this.selectedProfessors$
   ])
   .subscribe(([query, users]) => {
     const selectedIds = users.map((user) => user.id);
 
-    if(query)
-    this.store.dispatch(
-      SearchItems({
-        query,
-        professorIDs: selectedIds ?? [],
-      })
-    );
+    if (query && (query as string).length > 3) {
+      this.store.dispatch(
+        SearchItems({
+          query,
+          professorIDs: selectedIds ?? [],
+        })
+      );
+    } else {
+      this.store.dispatch(LoadStudyResources());
+    }
+
+
+
+
   });
 
 

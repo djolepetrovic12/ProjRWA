@@ -36,7 +36,7 @@ export class FlashcardService {
 
 
   findAllForUser(id:number) {
-    return this.flashcardRepository.findBy({userID:id});
+    return this.flashcardRepository.find({order: { id: 'DESC' },where:{userID:id}});
   }
 
 

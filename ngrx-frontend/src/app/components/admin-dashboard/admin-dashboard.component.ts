@@ -52,7 +52,7 @@ export class AdminDashboardComponent implements OnInit {
   edit(user: User): void {
     this.userRole$.pipe(take(1)).subscribe((role) => {
       if (role === 'ADMIN') {
-        this.matDialogRef.open(UpdateUserDialogComponent,{data: user});
+        this.matDialogRef.open(UpdateUserDialogComponent,{data: user,height:'auto'});
       }
       else
       {

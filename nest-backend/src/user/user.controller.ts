@@ -95,14 +95,16 @@ export class UserController {
     return this.userService.findOne(+id);
   }
 
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Admin])
   @Get('getAllUsers/:userID')
   getAllUsers(@Param('userID') id: number) {
     return this.userService.getAllUsers(id);
   }
 
   
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Admin])
   @Delete('deleteUser/:id')
   async deleteUser(@Param('id') id: number) {
 
@@ -129,7 +131,8 @@ export class UserController {
   }
 
   
-
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Admin])
   @Patch('updateUser/:id')
   updateUser(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     return this.userService.updateUser(+id,updateUserDto);

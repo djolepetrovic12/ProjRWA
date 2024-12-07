@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, BadRequestException, NotFoundException, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, Res, BadRequestException, NotFoundException, Query, UseGuards, SetMetadata } from '@nestjs/common';
 import { StudyResourceService } from './study-resource.service';
 import { CreateStudyResourceDto } from './dto/create-study-resource.dto';
 import { UpdateStudyResourceDto } from './dto/update-study-resource.dto';
@@ -9,12 +9,17 @@ import * as fs from 'fs';
 import * as multer from 'multer';
 import {Logger} from '@nestjs/common';
 import {Response} from 'express';
+import { JwtAuthGuard } from 'src/auth-guard/jwt-auth-guard.guard';
+import { RolesGuard } from 'src/roles-guard/roles-guard.guard';
+import { Roles } from 'enums';
 
 @Controller('studyResource')
 export class StudyResourceController {
 
   constructor(private readonly studyResourceService: StudyResourceService) {}
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Student,Roles.Professor])
   @Post('createAStudyResource/:userid')
   @UseInterceptors(
     FileInterceptor('file', {
@@ -56,6 +61,7 @@ export class StudyResourceController {
     return this.studyResourceService.create(+userid,createStudyResourceDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('downloadMyStudyResource/:resourceID')
   async downloadMyStudyResource(@Param('resourceID') resourceID:number,@Res() res: Response){
     const [ResLink,Uid]= await this.studyResourceService.findMyStudyResource(resourceID);
@@ -85,21 +91,29 @@ export class StudyResourceController {
     });
   }
 
-  @Get('findAll')
-  findAll() {
-    return this.studyResourceService.findAll();
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Admin,Roles.Student,Roles.Professor])
+  @Get('findInitial')
+  findInitial() {
+    return this.studyResourceService.findInitial();
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Student,Roles.Professor])
   @Get('findAllForUser/:id')
   findOne(@Param('id') id: string) {
     return this.studyResourceService.findAllForUser(+id);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Student,Roles.Professor])
   @Patch('updateMyStudyResource/:id')
   async updateMyStudyResource(@Param('id') id: string, @Body() updateStudyResourceDto: UpdateStudyResourceDto) {
     return await this.studyResourceService.update(+id, updateStudyResourceDto);
   }
 
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @SetMetadata('roles',[Roles.Student,Roles.Professor])
   @Delete('deleteMyStudyResource/:id')
   async remove(@Param('id') id: string) {
 
@@ -125,11 +139,13 @@ export class StudyResourceController {
     return this.studyResourceService.remove(+id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('searchItems') 
   searchItems(@Query('query') query: string, @Query('professorIDs') professorIDs: number[]) {
     return this.studyResourceService.searchItems(query,professorIDs);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get('searchProfessors')
   searchProfessors(@Query('query') query: string) {
     return this.studyResourceService.searchProfessors(query);
